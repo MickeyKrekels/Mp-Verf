@@ -200,17 +200,21 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\Core\Core.Repositories\Core.Repositories.csproj">
+      <Project>{9bc061bf-3b09-4dad-878c-cd163c0f1f74}</Project>
+      <Name>Core.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Desktop\Core\Core.Shared\Core.Shared.csproj">
       <Project>{50F807E4-9A83-450E-914D-D7F2B3220469}</Project>
       <Name>Core.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Desktop\Core\Core.WebApi\Core.WebApi.csproj">
+      <Project>{192d27a2-e807-496d-8889-3a8df7dcf6d4}</Project>
+      <Name>Core.WebApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Business Logic\Business Logic.csproj">
       <Project>{53EA7C20-062D-45D8-A520-71E53BFA3075}</Project>
       <Name>Business Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Repositorie\Repositorie.csproj">
-      <Project>{30AFF1BD-9A47-4108-8D4D-0002DA2B130E}</Project>
-      <Name>Repositorie</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

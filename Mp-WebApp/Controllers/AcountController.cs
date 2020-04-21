@@ -69,9 +69,7 @@ namespace Mp_WebApp.Controllers
         public ActionResult UserList()
         {
             ViewBag.Message = "All users";
-            var users = UserProcessor.GetUsers();
-            var models = UserProcessor.ConvertToModel(users);
-
+            var models = UserProcessor.ConvertAllUsersToModel();
             return View(models);
         }
     }

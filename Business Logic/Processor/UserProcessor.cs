@@ -33,7 +33,7 @@ namespace Business_Logic.Processor
             unitOfWork.CustomerRepository.Add(customer);
         } 
 
-        public static User UserLogin(UserModel model)
+        public static UserModel UserLogin(UserModel inputModel)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
@@ -42,15 +42,16 @@ namespace Business_Logic.Processor
             totalAcounts.AddRange(unitOfWork.AdminRepository.Get());
 
             var Result = totalAcounts
-                .Where(x => SecurePasswordHasher.Verify(model.Password, x.Password) == true &&
-                x.EmailAddress == model.Email)
+                .Where(x => SecurePasswordHasher.Verify(inputModel.Password, x.Password) == true &&
+                x.EmailAddress == inputModel.Email)
                 .SingleOrDefault();
 
             if (Result == null)
                 return null;
 
+           var model = ConvertToModel(Result);
 
-            return Result;
+            return model;
         }
 
         public static UserModel ConvertToModel(User user)
@@ -88,6 +89,39 @@ namespace Business_Logic.Processor
             return models;
         }
 
+        public static List<UserModel> ConvertAllUsersToModel()
+        {
+            var users = GetUsers();
+            var models = ConvertToModel(users);
+
+            return models;
+
+        }
+
+        public static UserModel ConvertUserToModel(Guid id)
+        {
+            var user = GetUser(id);
+            var model = ConvertToModel(user);
+
+            return model;
+        }
+
+        public static string ReturnRole(Guid id)
+        {
+            var user = GetUser(id);
+
+            if(user is Customer)
+            {
+                return typeof(Customer).Name;
+            }
+            if (user is Admin)
+            {
+                return typeof(Admin).Name;
+            }
+            return "";
+        }
+
+
         public static List<User> GetUsers()
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
@@ -111,19 +145,5 @@ namespace Business_Logic.Processor
 
             return result;
         }
-
-        public static string ReturnRole(User user)
-        {
-            if(user is Customer)
-            {
-                return typeof(Customer).Name;
-            }
-            if (user is Admin)
-            {
-                return typeof(Admin).Name;
-            }
-            return "";
-        }
-
     }
 }

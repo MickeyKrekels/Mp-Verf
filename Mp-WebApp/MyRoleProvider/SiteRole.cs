@@ -38,8 +38,7 @@ namespace Mp_WebApp.MyRoleProvider
 
         public override string[] GetRolesForUser(string username)
         {
-            var user = UserProcessor.GetUser(Guid.Parse(username));
-            var data = UserProcessor.ReturnRole(user);
+            var data = UserProcessor.ReturnRole(Guid.Parse(username));
             string[] result = { data };
             return result;
         }
