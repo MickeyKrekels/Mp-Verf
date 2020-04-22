@@ -8,6 +8,27 @@ namespace Business_Logic.Processor
 {
     public static class StoreItemProcessor
     {
+        public static void CreateStoreItem(StoreItemModel model)
+        {
+            if (model == null)
+                return;
+
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            StoreItem storeItem = new StoreItem
+            {
+                Id = Guid.NewGuid(),
+                Name = model.Name,
+                Brand = model.Brand,
+                Discription = model.Discription,
+                Price = model.Price,
+                Images = model.Images,
+                Specification = model.Specifications
+            };
+
+            unitOfWork.StoreItemRepository.Add(storeItem);
+        }
+
         public static StoreItemModel ConvertStoreItemToModel(Guid id)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
@@ -16,7 +37,17 @@ namespace Business_Logic.Processor
             if (result == null)
                 return null;
 
-            StoreItemModel model = new StoreItemModel(result.Name,result.Discription, result.Brand, result.Price, result.Images, result.Specification);
+            StoreItemModel model = new StoreItemModel
+            {
+                Id = result.Id,
+                Name = result.Name,
+                Discription = result.Discription,
+                Brand = result.Brand,
+                Price = result.Price,
+                Images = result.Images,
+                Specifications = result.Specification
+            };
+
             return model;
         }
 
@@ -40,7 +71,7 @@ namespace Business_Logic.Processor
             return storeItem;
         }
 
-        public static List<StoreItemModel> ConvertAllStoreItemToModel()
+        public static List<StoreItemModel> ConvertAllStoreItemToModels()
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
             var result = unitOfWork.StoreItemRepository.Get();
@@ -51,7 +82,17 @@ namespace Business_Logic.Processor
 
             foreach (var storeItem in result)
             {
-                StoreItemModel model = new StoreItemModel(storeItem.Name, storeItem.Discription, storeItem.Brand, storeItem.Price, storeItem.Images, storeItem.Specification);
+                StoreItemModel model = new StoreItemModel
+                {
+                    Id = storeItem.Id,
+                    Name = storeItem.Name,
+                    Discription = storeItem.Discription,
+                    Brand = storeItem.Brand,
+                    Price = storeItem.Price,
+                    Images = storeItem.Images,
+                    Specifications = storeItem.Specification
+                };
+
                 models.Add(model);
             }
 

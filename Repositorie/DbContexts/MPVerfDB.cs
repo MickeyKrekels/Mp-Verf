@@ -28,9 +28,12 @@ namespace Repositorie.DbContexts
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.AddBefore<ForeignKeyAssociationMultiplicityConvention>(new CustomForeignKeyDiscoveryConvention());
         }
+
         //users
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Admin> Admin { get; set; }
+
+        //items
         public DbSet<StoreItem> StoreItem { get; set; }
 
 

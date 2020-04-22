@@ -135,7 +135,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AcountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PaintController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,6 +182,8 @@
     <Content Include="Views\Acount\SignUp.cshtml" />
     <Content Include="Views\Acount\Login.cshtml" />
     <Content Include="Views\Acount\UserList.cshtml" />
+    <Content Include="Views\Products\AllProducts.cshtml" />
+    <Content Include="Views\Products\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
