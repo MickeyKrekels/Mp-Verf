@@ -77,13 +77,21 @@
     <Compile Include="Migrations\202004190754015_StoreItemUpdate.designer.cs">
       <DependentUpon>202004190754015_StoreItemUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004232024311_UpdateStoreImages.cs" />
+    <Compile Include="Migrations\202004232024311_UpdateStoreImages.designer.cs">
+      <DependentUpon>202004232024311_UpdateStoreImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004232033468_UpdatePriceToDecimal.cs" />
+    <Compile Include="Migrations\202004232033468_UpdatePriceToDecimal.designer.cs">
+      <DependentUpon>202004232033468_UpdatePriceToDecimal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Base\User.cs" />
     <Compile Include="Repositories\StoreItems\IStoreItemRepository.cs" />
     <Compile Include="Repositories\StoreItems\StoreItemRepository.cs" />
-    <Compile Include="Repositories\Users\AdminRepository.cs" />
-    <Compile Include="Repositories\Users\CustomerRepository.cs" />
+    <Compile Include="UnitOfWorks\Users\AdminRepository.cs" />
+    <Compile Include="UnitOfWorks\Users\CustomerRepository.cs" />
     <Compile Include="Interfaces\IAdminRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="UnitOfWorks\IUnitOfWorkRepository.cs" />
@@ -119,6 +127,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004190754015_StoreItemUpdate.resx">
       <DependentUpon>202004190754015_StoreItemUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004232024311_UpdateStoreImages.resx">
+      <DependentUpon>202004232024311_UpdateStoreImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004232033468_UpdatePriceToDecimal.resx">
+      <DependentUpon>202004232033468_UpdatePriceToDecimal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

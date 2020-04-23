@@ -14,7 +14,7 @@ namespace RepositorieTests
         {
             UnitOfWorkRepository UnitOfWork = new UnitOfWorkRepository();
 
-            var result = UnitOfWork.CustomerRepository.Get();
+            var result = UnitOfWork.StoreItemRepository.Get();
          }
         [TestMethod]
         public void CreateCostumer()

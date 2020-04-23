@@ -3,6 +3,8 @@ using Repositorie.Entities.Base;
 using Repositorie.UnitOfWorks;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Web;
 
 namespace Business_Logic.Processor
 {
@@ -15,6 +17,43 @@ namespace Business_Logic.Processor
 
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
+
+            List<StoreImage> StoreImages = new List<StoreImage>();
+            List<Specification> Specifications = new List<Specification>();
+            if (model.Images != null)
+            {
+                foreach (var imageData in model.Images)
+                {
+                    var imageBytes = ConverToBytes(imageData);
+
+                    if (imageBytes == null)
+                        continue;
+
+                    StoreImage storeImage = new StoreImage
+                    {
+                        Id = Guid.NewGuid(),
+                        ImageData = imageBytes
+                    };
+
+                    StoreImages.Add(storeImage);
+                }
+            }
+            if(model.Specifications != null)
+            {
+            foreach (var specificationModel in model.Specifications)
+            {
+                Specification specification = new Specification
+                {
+                    Id = Guid.NewGuid(),
+                    Name = specificationModel.Name,
+                    Description = specificationModel.Description
+                    
+                };
+
+                Specifications.Add(specification);
+            }
+            }
+
             StoreItem storeItem = new StoreItem
             {
                 Id = Guid.NewGuid(),
@@ -22,8 +61,8 @@ namespace Business_Logic.Processor
                 Brand = model.Brand,
                 Discription = model.Discription,
                 Price = model.Price,
-                Images = model.Images,
-                Specification = model.Specifications
+                Images = StoreImages,
+                Specification = Specifications
             };
 
             unitOfWork.StoreItemRepository.Add(storeItem);
@@ -44,8 +83,6 @@ namespace Business_Logic.Processor
                 Discription = result.Discription,
                 Brand = result.Brand,
                 Price = result.Price,
-                Images = result.Images,
-                Specifications = result.Specification
             };
 
             return model;
@@ -64,8 +101,6 @@ namespace Business_Logic.Processor
                 Discription = model.Discription,
                 Price = model.Price,
                 Brand = model.Brand,
-                Images = model.Images,
-                Specification = model.Specifications
             };
 
             return storeItem;
@@ -89,8 +124,6 @@ namespace Business_Logic.Processor
                     Discription = storeItem.Discription,
                     Brand = storeItem.Brand,
                     Price = storeItem.Price,
-                    Images = storeItem.Images,
-                    Specifications = storeItem.Specification
                 };
 
                 models.Add(model);
@@ -99,6 +132,19 @@ namespace Business_Logic.Processor
             return models;
         }
 
+        private static byte[] ConverToBytes(HttpPostedFileBase file)
+        {
+            if (file == null)
+                return null;
+
+            var length = file.InputStream.Length; //Length: 103050706
+            byte[] fileData = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                fileData = binaryReader.ReadBytes(file.ContentLength);
+            }
+            return fileData;
+        }
 
     }
 }

@@ -12,7 +12,7 @@ namespace Repositorie.Entities.Base
         public string Name { get; set; }
         public string Discription { get; set; }
         public string Brand { get; set; }
-        public float  Price { get; set; }
+        public decimal Price { get; set; }
 
         public List<Specification> Specification { get; set; }
         public List<StoreImage> Images { get; set; }

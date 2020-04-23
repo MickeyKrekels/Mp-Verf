@@ -9,6 +9,6 @@ namespace Repositorie.Entities.Base
 {
     public class StoreImage : EntityModalBase
     {
-        public Byte[] ImageData;
+        public Byte[] ImageData { get; set; }
     }
 }
