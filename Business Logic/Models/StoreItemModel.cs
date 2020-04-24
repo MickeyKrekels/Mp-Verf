@@ -1,4 +1,5 @@
 ﻿using Core.Shared.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,7 +25,7 @@ namespace Business_Logic.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        public List<HttpPostedFileBase> Images { get; set; }
+        public List<Byte[]> Images { get; set; }
         public List<SpecificationModel> Specifications { get; set; }
     }
 }

@@ -1,15 +1,8 @@
-﻿using Common.ExtensionMethods;
-using Core.Repositories.Conventions;
-using Repositorie.Entities;
+﻿using Core.Repositories.Conventions;
 using Repositorie.Entities.Base;
 using Repositorie.Entities.Users;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositorie.DbContexts
 {
@@ -35,8 +28,6 @@ namespace Repositorie.DbContexts
 
         //items
         public DbSet<StoreItem> StoreItem { get; set; }
-
-
-
+        public DbSet<StoreImage> StoreImage { get; set; }
     }
 }

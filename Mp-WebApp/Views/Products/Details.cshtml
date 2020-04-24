@@ -11,6 +11,19 @@
     <h4>StoreItemModel</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        @{
+            if (Model.Images != null)
+            {
+                for (int i = 0; i < Model.Images.Count; i++)
+                {
+                    <dt>
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Images[i])" width="80" height="80" />
+                    </dt>
+                }
+            }
+        }
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>

@@ -2,8 +2,6 @@
 using Business_Logic.Processor;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,19 +18,29 @@ namespace Mp_WebApp.Controllers
 
             return View(StoreItems);
         }
-        
+
         public ActionResult AddProduct()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddProduct(StoreItemModel model)
+        public ActionResult AddProduct(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
         {
             if (model == null || !ModelState.IsValid)
                 return View();
 
-
+            //convert the HttpPostedFileBase images to Byte[]
+            if (StoreImages != null)
+            {
+                List<Byte[]> imageData = new List<Byte[]>();
+                foreach (var imageFileBase in StoreImages)
+                {
+                    var bytes = StoreItemProcessor.ConverToBytes(imageFileBase);
+                    imageData.Add(bytes);
+                }
+                model.Images = imageData;
+            }
 
             StoreItemProcessor.CreateStoreItem(model);
 
@@ -43,7 +51,7 @@ namespace Mp_WebApp.Controllers
         {
             var model = StoreItemProcessor.ConvertStoreItemToModel(id);
 
-            if(model == null)
+            if (model == null)
                 return View();
 
             return View(model);
@@ -84,7 +92,5 @@ namespace Mp_WebApp.Controllers
 
             return View(model);
         }
-
-
     }
 }

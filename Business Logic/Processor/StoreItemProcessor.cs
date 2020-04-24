@@ -1,4 +1,5 @@
 ﻿using Business_Logic.Models;
+using Common.ExtensionMethods;
 using Repositorie.Entities.Base;
 using Repositorie.UnitOfWorks;
 using System;
@@ -26,34 +27,29 @@ namespace Business_Logic.Processor
             {
                 foreach (var imageData in model.Images)
                 {
-                    var imageBytes = ConverToBytes(imageData);
-
-                    if (imageBytes == null)
-                        continue;
-
                     StoreImage storeImage = new StoreImage
                     {
                         Id = Guid.NewGuid(),
-                        ImageData = imageBytes
+                        ImageData = imageData
                     };
 
                     StoreImages.Add(storeImage);
                 }
             }
-            if(model.Specifications != null)
+            if (model.Specifications != null)
             {
-            foreach (var specificationModel in model.Specifications)
-            {
-                Specification specification = new Specification
+                foreach (var specificationModel in model.Specifications)
                 {
-                    Id = Guid.NewGuid(),
-                    Name = specificationModel.Name,
-                    Description = specificationModel.Description
-                    
-                };
+                    Specification specification = new Specification
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = specificationModel.Name,
+                        Description = specificationModel.Description
 
-                Specifications.Add(specification);
-            }
+                    };
+
+                    Specifications.Add(specification);
+                }
             }
 
             StoreItem storeItem = new StoreItem
@@ -91,7 +87,7 @@ namespace Business_Logic.Processor
             if (storeItem == null)
                 return;
 
-           unitOfWork.StoreItemRepository.Update(storeItem);
+            unitOfWork.StoreItemRepository.Update(storeItem);
         }
 
 
@@ -107,6 +103,36 @@ namespace Business_Logic.Processor
             if (result == null)
                 return null;
 
+            List<Byte[]> storeImages = new List<Byte[]>();
+            List<SpecificationModel> specifications = new List<SpecificationModel>();
+
+            if (result.Images != null)
+            {
+                foreach (var image in result.Images)
+                {
+                    var imageFileBase = image.ImageData;
+
+                    if (imageFileBase == null)
+                        continue;
+
+                    storeImages.Add(imageFileBase);
+                }
+            }
+
+            if (result.Specification != null)
+            {
+                foreach (var specificationModel in result.Specification)
+                {
+                    SpecificationModel specification = new SpecificationModel
+                    {                    
+                        Name = specificationModel.Name,
+                        Description = specificationModel.Description
+                    };
+
+                    specifications.Add(specification);
+                }
+            }
+
             StoreItemModel model = new StoreItemModel
             {
                 Id = result.Id,
@@ -114,6 +140,8 @@ namespace Business_Logic.Processor
                 Discription = result.Discription,
                 Brand = result.Brand,
                 Price = result.Price,
+                Images = storeImages,
+                Specifications = specifications,
             };
 
             return model;
@@ -126,7 +154,8 @@ namespace Business_Logic.Processor
             if (model == null)
                 return null;
 
-            StoreItem storeItem = new StoreItem {
+            StoreItem storeItem = new StoreItem
+            {
                 Id = model.Id,
                 Name = model.Name,
                 Discription = model.Discription,
@@ -163,7 +192,7 @@ namespace Business_Logic.Processor
             return models;
         }
 
-        private static byte[] ConverToBytes(HttpPostedFileBase file)
+        public static byte[] ConverToBytes(HttpPostedFileBase file)
         {
             if (file == null)
                 return null;

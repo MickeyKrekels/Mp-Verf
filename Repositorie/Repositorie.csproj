@@ -85,6 +85,10 @@
     <Compile Include="Migrations\202004232033468_UpdatePriceToDecimal.designer.cs">
       <DependentUpon>202004232033468_UpdatePriceToDecimal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004241151368_AddedStoreImageDB.cs" />
+    <Compile Include="Migrations\202004241151368_AddedStoreImageDB.designer.cs">
+      <DependentUpon>202004241151368_AddedStoreImageDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Base\User.cs" />
@@ -133,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004232033468_UpdatePriceToDecimal.resx">
       <DependentUpon>202004232033468_UpdatePriceToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004241151368_AddedStoreImageDB.resx">
+      <DependentUpon>202004241151368_AddedStoreImageDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

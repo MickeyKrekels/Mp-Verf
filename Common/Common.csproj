@@ -38,6 +38,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http">
       <HintPath>..\..\..\..\Desktop\Core\Core.WebApi\bin\Debug\System.Web.Http.dll</HintPath>
     </Reference>
@@ -49,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMethods\MemoryPostedFile.cs" />
     <Compile Include="ExtensionMethods\SecurePasswordHasher.cs" />
     <Compile Include="ExtensionMethods\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

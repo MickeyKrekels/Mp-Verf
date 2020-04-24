@@ -9,5 +9,6 @@ namespace Repositorie.DbContexts
         DbSet<Admin> Admin { get; set; }
         DbSet<Customer> Customer { get; set; }
         DbSet<StoreItem> StoreItem { get; set; }
+        DbSet<StoreImage> StoreImage { get; set; }
     }
 }
