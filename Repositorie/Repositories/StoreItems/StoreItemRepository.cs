@@ -48,15 +48,15 @@ namespace Repositorie.Repositories.StoreItems
         }
 
         //Update
-        public void Update(Guid id, StoreItem storeItem)
+        public void Update(StoreItem storeItem)
         {
-            var result = context.StoreItem.Where(x => x.Id == id).First();
+            var result = context.StoreItem.Where(x => x.Id == storeItem.Id).First();
 
             //log error
             if (result == null)
                 return;
 
-            result = storeItem;
+            context.Entry(result).CurrentValues.SetValues(storeItem);
             context.SaveChanges();
         }
 

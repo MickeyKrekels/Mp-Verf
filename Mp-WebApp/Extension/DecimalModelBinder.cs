@@ -15,11 +15,13 @@ namespace Mp_WebApp.Extension
 
             object actualValue = null;
 
-            if(valueResult.AttemptedValue != string.Empty)
+            var culture = new CultureInfo("en-US");
+
+            if (valueResult.AttemptedValue != string.Empty)
             {
                 try
                 {
-                    actualValue = Convert.ToDecimal(valueResult.AttemptedValue, CultureInfo.CurrentCulture);
+                    actualValue = Convert.ToDecimal(valueResult.AttemptedValue, culture);
                 }
                 catch(FormatException e)
                 {

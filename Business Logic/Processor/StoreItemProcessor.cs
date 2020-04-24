@@ -10,6 +10,8 @@ namespace Business_Logic.Processor
 {
     public static class StoreItemProcessor
     {
+        #region CRUD
+
         public static void CreateStoreItem(StoreItemModel model)
         {
             if (model == null)
@@ -68,6 +70,35 @@ namespace Business_Logic.Processor
             unitOfWork.StoreItemRepository.Add(storeItem);
         }
 
+        public static void RemoveStoreItem(StoreItemModel model)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            StoreItem storeItem = ConvertModelToStoreItem(model);
+
+            if (storeItem == null)
+                return;
+
+            unitOfWork.StoreItemRepository.Remove(model.Id);
+        }
+
+        public static void EditStoreItem(StoreItemModel model)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            StoreItem storeItem = ConvertModelToStoreItem(model);
+
+            if (storeItem == null)
+                return;
+
+           unitOfWork.StoreItemRepository.Update(storeItem);
+        }
+
+
+        #endregion
+
+        #region ConvertFunctions
+
         public static StoreItemModel ConvertStoreItemToModel(Guid id)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
@@ -96,7 +127,7 @@ namespace Business_Logic.Processor
                 return null;
 
             StoreItem storeItem = new StoreItem {
-                Id = Guid.NewGuid(),
+                Id = model.Id,
                 Name = model.Name,
                 Discription = model.Discription,
                 Price = model.Price,
@@ -145,6 +176,8 @@ namespace Business_Logic.Processor
             }
             return fileData;
         }
+
+        #endregion
 
     }
 }

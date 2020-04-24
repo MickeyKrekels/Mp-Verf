@@ -9,8 +9,10 @@ using System.Web.Mvc;
 
 namespace Mp_WebApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
+        [AllowAnonymous]
         public ActionResult AllProducts()
         {
             var StoreItems = StoreItemProcessor.ConvertAllStoreItemToModels();
@@ -19,14 +21,12 @@ namespace Mp_WebApp.Controllers
             return View(StoreItems);
         }
         
-        [Authorize(Roles = "Admin")]
         public ActionResult AddProduct()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public ActionResult AddProduct(StoreItemModel model)
         {
             if (model == null || !ModelState.IsValid)
@@ -38,5 +38,53 @@ namespace Mp_WebApp.Controllers
 
             return RedirectToAction("AllProducts");
         }
+
+        public ActionResult Edit(Guid id)
+        {
+            var model = StoreItemProcessor.ConvertStoreItemToModel(id);
+
+            if(model == null)
+                return View();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(StoreItemModel model)
+        {
+
+            StoreItemProcessor.EditStoreItem(model);
+            return RedirectToAction("AllProducts");
+        }
+
+
+        public ActionResult Delete(Guid id)
+        {
+            var model = StoreItemProcessor.ConvertStoreItemToModel(id);
+
+            if (model == null)
+                return View();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(StoreItemModel model)
+        {
+            StoreItemProcessor.RemoveStoreItem(model);
+            return RedirectToAction("AllProducts");
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            var model = StoreItemProcessor.ConvertStoreItemToModel(id);
+
+            if (model == null)
+                return View();
+
+            return View(model);
+        }
+
+
     }
 }

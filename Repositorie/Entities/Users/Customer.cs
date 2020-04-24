@@ -12,5 +12,9 @@ namespace Repositorie.Entities.Users
     {
         public List<StoreItem> ShoppingCart { get; set; }
 
+        public Customer()
+        {
+            ShoppingCart = new List<StoreItem>();
+        }
     }
 }
