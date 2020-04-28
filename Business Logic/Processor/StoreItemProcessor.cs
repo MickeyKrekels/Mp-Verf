@@ -205,6 +205,19 @@ namespace Business_Logic.Processor
             }
             return fileData;
         }
+        public static List<byte[]> ConverToBytes(List<HttpPostedFileBase> files)
+        {
+            if (files == null)
+                return null;
+
+            List<Byte[]> imageData = new List<Byte[]>();
+            foreach (var imageFileBase in files)
+            {
+                var bytes = StoreItemProcessor.ConverToBytes(imageFileBase);
+                imageData.Add(bytes);
+            }
+            return imageData;
+        }
 
         #endregion
 

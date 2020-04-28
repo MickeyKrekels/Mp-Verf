@@ -23,22 +23,16 @@ namespace Mp_WebApp.Controllers
         {
             return View();
         }
-
+          
         [HttpPost]
         public ActionResult AddProduct(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
         {
             if (model == null || !ModelState.IsValid)
                 return View();
 
-            //convert the HttpPostedFileBase images to Byte[]
             if (StoreImages != null)
             {
-                List<Byte[]> imageData = new List<Byte[]>();
-                foreach (var imageFileBase in StoreImages)
-                {
-                    var bytes = StoreItemProcessor.ConverToBytes(imageFileBase);
-                    imageData.Add(bytes);
-                }
+                var imageData = StoreItemProcessor.ConverToBytes(StoreImages);
                 model.Images = imageData;
             }
 
