@@ -55,7 +55,7 @@ namespace Repositorie.Repositories.StoreItems
             //log error
             if (result == null)
                 return;
-
+            result.Images = storeItem.Images;
             context.Entry(result).CurrentValues.SetValues(storeItem);
             context.SaveChanges();
         }

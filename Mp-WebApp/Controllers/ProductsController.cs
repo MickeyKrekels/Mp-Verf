@@ -43,7 +43,7 @@ namespace Mp_WebApp.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            var model = StoreItemProcessor.ConvertStoreItemToModel(id);
+            var model = StoreItemProcessor.GetStoreItemModelbyId(id);
 
             if (model == null)
                 return View();
@@ -52,9 +52,13 @@ namespace Mp_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(StoreItemModel model)
+        public ActionResult Edit(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
         {
-
+            if (StoreImages != null)
+            {
+                var imageData = StoreItemProcessor.ConverToBytes(StoreImages);
+                model.Images = imageData;
+            }
             StoreItemProcessor.EditStoreItem(model);
             return RedirectToAction("AllProducts");
         }
@@ -62,7 +66,7 @@ namespace Mp_WebApp.Controllers
 
         public ActionResult Delete(Guid id)
         {
-            var model = StoreItemProcessor.ConvertStoreItemToModel(id);
+            var model = StoreItemProcessor.GetStoreItemModelbyId(id);
 
             if (model == null)
                 return View();
@@ -79,7 +83,7 @@ namespace Mp_WebApp.Controllers
 
         public ActionResult Details(Guid id)
         {
-            var model = StoreItemProcessor.ConvertStoreItemToModel(id);
+            var model = StoreItemProcessor.GetStoreItemModelbyId(id);
 
             if (model == null)
                 return View();
