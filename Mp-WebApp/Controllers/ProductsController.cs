@@ -1,9 +1,11 @@
-﻿using Business_Logic.Models;
+﻿using System.Collections.Generic;
 using Business_Logic.Processor;
-using System;
-using System.Collections.Generic;
-using System.Web;
+using Business_Logic.Models;
 using System.Web.Mvc;
+using System.Web;
+using PagedList.Mvc;
+using PagedList;
+using System;
 
 namespace Mp_WebApp.Controllers
 {
@@ -11,12 +13,11 @@ namespace Mp_WebApp.Controllers
     public class ProductsController : Controller
     {
         [AllowAnonymous]
-        public ActionResult AllProducts()
+        public ActionResult AllProducts(int? i)
         {
             var StoreItems = StoreItemProcessor.ConvertAllStoreItemToModels();
 
-
-            return View(StoreItems);
+            return View(StoreItems.ToPagedList(i ?? 1, 5));
         }
 
         public ActionResult AddProduct()
