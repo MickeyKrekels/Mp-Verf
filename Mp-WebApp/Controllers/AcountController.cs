@@ -1,5 +1,7 @@
 ﻿using Business_Logic.Models;
 using Business_Logic.Processor;
+using PagedList.Mvc;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,11 +68,11 @@ namespace Mp_WebApp.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult UserList()
+        public ActionResult UserList(int? i)
         {
             ViewBag.Message = "All users";
             var models = UserProcessor.ConvertAllUsersToModel();
-            return View(models);
+            return View(models.ToPagedList(i ?? 1, 10));
         }
     }
 }
