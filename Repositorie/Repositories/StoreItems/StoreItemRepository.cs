@@ -21,6 +21,7 @@ namespace Repositorie.Repositories.StoreItems
         public void Add(StoreItem storeItem)
         {
             context.StoreItem.Add(storeItem);
+
             context.SaveChanges();
         }
 

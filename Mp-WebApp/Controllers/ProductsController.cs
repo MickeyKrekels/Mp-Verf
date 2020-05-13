@@ -82,6 +82,7 @@ namespace Mp_WebApp.Controllers
             return RedirectToAction("AllProducts");
         }
 
+        [AllowAnonymous]
         public ActionResult Details(Guid id)
         {
             var model = StoreItemProcessor.GetStoreItemModelbyId(id);
