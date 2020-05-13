@@ -59,13 +59,23 @@ namespace Business_Logic.Processor
             if(user == null)
                 return null;
 
+            List<StoreItemModel> shoppingCart = new List<StoreItemModel>();
+
+            if (user is Customer)
+            {
+                Customer customer = (Customer)user;
+                shoppingCart = StoreItemProcessor.ConvertStoreItemToModel(customer.ShoppingCart);
+            }
+
             UserModel model = new UserModel
             {
                 Id = user.Id,
                 Email = user.EmailAddress,
                 Name = user.Name,
-                Password = user.Password
+                Password = user.Password,
+                ShoppingCart = shoppingCart
             };
+
             return model;
         }
 
@@ -120,7 +130,6 @@ namespace Business_Logic.Processor
             }
             return "";
         }
-
 
         public static List<User> GetUsers()
         {

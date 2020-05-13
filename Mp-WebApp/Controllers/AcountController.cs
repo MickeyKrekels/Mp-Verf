@@ -74,5 +74,19 @@ namespace Mp_WebApp.Controllers
             var models = UserProcessor.ConvertAllUsersToModel();
             return View(models.ToPagedList(i ?? 1, 10));
         }
+
+        [Authorize(Roles = "Customer")]
+        public ActionResult ShoppingCart()
+        {
+            string identity = User.Identity.Name;
+            Guid id = Guid.Parse(identity);
+
+            var result = UserProcessor.ConvertUserToModel(id);
+
+            if(result == null)
+                return View();
+
+            return View(result.ShoppingCart);
+        }
     }
 }

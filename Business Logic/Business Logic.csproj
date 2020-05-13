@@ -59,7 +59,7 @@
     <Compile Include="Models\SpecificationModel.cs" />
     <Compile Include="Processor\UserProcessor.cs" />
     <Compile Include="Processor\StoreItemProcessor.cs" />
-    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\Paint.cs" />
     <Compile Include="Models\StoreItemModel.cs" />
     <Compile Include="Program.cs" />

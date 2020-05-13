@@ -1,7 +1,7 @@
 ﻿using Core.Shared.Entities;
 using System.ComponentModel.DataAnnotations;
 using System;
-
+using System.Collections.Generic;
 
 namespace Business_Logic.Models
 {
@@ -27,10 +27,7 @@ namespace Business_Logic.Models
         [Compare("Password",ErrorMessage = "The Password and ConfirmPassword must match.") ]
         public string ConfirmPassword { get; set; }
 
-        public UserModel()
-        {
-            Id = Guid.NewGuid();
-        }
+        public List<StoreItemModel> ShoppingCart { get; set; }
 
-    }
+}
 }

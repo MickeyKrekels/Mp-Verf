@@ -67,8 +67,6 @@ namespace Business_Logic.Processor
 
             return model;
         }
-
-
         public static StoreItem ConvertModelToStoreItem(StoreItemModel model)
         {
 
@@ -169,7 +167,7 @@ namespace Business_Logic.Processor
             return imageData;
         }
 
-        private static StoreItemModel ConvertStoreItemToModel(StoreItem storeItem)
+        public static StoreItemModel ConvertStoreItemToModel(StoreItem storeItem)
         {
 
             if (storeItem == null)
@@ -217,6 +215,19 @@ namespace Business_Logic.Processor
             };
 
             return model;
+        }
+
+        public static List<StoreItemModel> ConvertStoreItemToModel(List<StoreItem> storeItems)
+        {
+            List<StoreItemModel> models = new List<StoreItemModel>();
+
+            foreach (var storeItem in storeItems)
+            {
+                var model = ConvertStoreItemToModel(storeItem);
+                models.Add(model);
+            }
+
+            return models;
         }
 
         #endregion

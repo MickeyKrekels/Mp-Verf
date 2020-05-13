@@ -38,6 +38,10 @@
 
                     @if (Request.IsAuthenticated)
                     {
+                        if (User.IsInRole("Customer"))
+                        {
+                            <li>@Html.ActionLink("My shoppingCart", "ShoppingCart", "Acount")</li>
+                        }
                         <li>@Html.ActionLink("Log out", "LogOut", "Acount")</li>
 
                     }
