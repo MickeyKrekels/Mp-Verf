@@ -67,6 +67,20 @@ namespace Business_Logic.Processor
 
             return model;
         }
+
+        public static List<StoreItemModel> GetStoreItemModelbyId(List<Guid> ids)
+        {
+            List<StoreItemModel> models = new List<StoreItemModel>();
+
+            foreach (var id in ids)
+            {
+                var model = GetStoreItemModelbyId(id);
+                models.Add(model);
+            }
+
+            return models;
+        }
+
         public static StoreItem ConvertModelToStoreItem(StoreItemModel model)
         {
 
@@ -117,6 +131,24 @@ namespace Business_Logic.Processor
             };
 
             return storeItem;
+        }
+
+        public static List<StoreItem> ConvertModelToStoreItem(List<StoreItemModel> models)
+        {
+
+            if (models == null)
+                return null;
+
+            List<StoreItem> StoreItems = new List<StoreItem>();
+
+            foreach (var model in models)
+            {
+                var storeItem = ConvertModelToStoreItem(model);
+                StoreItems.Add(storeItem);
+            }
+
+            return StoreItems;
+
         }
 
         public static List<StoreItemModel> ConvertAllStoreItemToModels()

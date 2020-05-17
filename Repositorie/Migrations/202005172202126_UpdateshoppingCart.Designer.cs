@@ -7,13 +7,13 @@ namespace Repositorie.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class AddedStoreImageDB : IMigrationMetadata
+    public sealed partial class UpdateshoppingCart : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedStoreImageDB));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateshoppingCart));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004241151368_AddedStoreImageDB"; }
+            get { return "202005172202126_UpdateshoppingCart"; }
         }
         
         string IMigrationMetadata.Source

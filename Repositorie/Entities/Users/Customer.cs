@@ -10,11 +10,6 @@ namespace Repositorie.Entities.Users
 {
     public class Customer : User
     {
-        public List<StoreItem> ShoppingCart { get; set; }
-
-        public Customer()
-        {
-            ShoppingCart = new List<StoreItem>();
-        }
+        public virtual List<Guid> ShoppingCart { get; set; }
     }
 }

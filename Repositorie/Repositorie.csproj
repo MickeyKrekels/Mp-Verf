@@ -85,17 +85,17 @@
     <Compile Include="Migrations\202004232033468_UpdatePriceToDecimal.designer.cs">
       <DependentUpon>202004232033468_UpdatePriceToDecimal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004241151368_AddedStoreImageDB.cs" />
-    <Compile Include="Migrations\202004241151368_AddedStoreImageDB.designer.cs">
-      <DependentUpon>202004241151368_AddedStoreImageDB.cs</DependentUpon>
+    <Compile Include="Migrations\202005172202126_UpdateshoppingCart.cs" />
+    <Compile Include="Migrations\202005172202126_UpdateshoppingCart.designer.cs">
+      <DependentUpon>202005172202126_UpdateshoppingCart.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Base\User.cs" />
     <Compile Include="Repositories\StoreItems\IStoreItemRepository.cs" />
     <Compile Include="Repositories\StoreItems\StoreItemRepository.cs" />
-    <Compile Include="UnitOfWorks\Users\AdminRepository.cs" />
-    <Compile Include="UnitOfWorks\Users\CustomerRepository.cs" />
+    <Compile Include="Repositories\Users\AdminRepository.cs" />
+    <Compile Include="Repositories\Users\CustomerRepository.cs" />
     <Compile Include="Interfaces\IAdminRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="UnitOfWorks\IUnitOfWorkRepository.cs" />
@@ -138,8 +138,8 @@
     <EmbeddedResource Include="Migrations\202004232033468_UpdatePriceToDecimal.resx">
       <DependentUpon>202004232033468_UpdatePriceToDecimal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004241151368_AddedStoreImageDB.resx">
-      <DependentUpon>202004241151368_AddedStoreImageDB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005172202126_UpdateshoppingCart.resx">
+      <DependentUpon>202005172202126_UpdateshoppingCart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

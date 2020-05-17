@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Repositorie.Entities.Base;
 using Repositorie.Entities.Users;
 
 namespace Repositorie.Interfaces.Repositories
@@ -7,5 +9,6 @@ namespace Repositorie.Interfaces.Repositories
     {
         void Add(Customer customer);
         List<Customer> Get();
+        void UpdateShoppingCart(Guid id, List<StoreItem> storeItems);
     }
 }

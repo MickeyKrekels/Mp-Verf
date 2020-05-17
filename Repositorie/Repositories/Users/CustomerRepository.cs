@@ -1,4 +1,5 @@
 ﻿using Repositorie.DbContexts;
+using Repositorie.Entities.Base;
 using Repositorie.Entities.Users;
 using Repositorie.Interfaces.Repositories;
 using System;
@@ -28,6 +29,18 @@ namespace Repositorie.Repositories.Users
         public void Add(Customer customer)
         {
             context.Customer.Add(customer);
+            context.SaveChanges();
+        }
+
+        public void UpdateShoppingCart(Guid id,List<StoreItem> storeItems)
+        {
+            var user = context.Customer.Where(x => x.Id == id).First();
+
+            if (user == null)
+                return;
+
+            user.ShoppingCart = storeItems.Select(x=>x.Id).ToList();
+            context.Entry(user).CurrentValues.SetValues(storeItems);
             context.SaveChanges();
         }
     }

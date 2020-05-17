@@ -88,5 +88,23 @@ namespace Mp_WebApp.Controllers
 
             return View(result.ShoppingCart);
         }
+
+        public ActionResult AddToShoppingCart(Guid storeItemId)
+        {
+            // Gets the current user's shopping cart
+            string identity = User.Identity.Name;
+            Guid id = Guid.Parse(identity);
+
+            var user = UserProcessor.ConvertUserToModel(id);
+            var storeItem = StoreItemProcessor.GetStoreItemModelbyId(storeItemId);
+
+            user.ShoppingCart.Add(storeItem);
+
+            UserProcessor.UpdateShoppingCart(id, user.ShoppingCart);
+
+            return RedirectToAction("ShoppingCart","Acount");
+        }
+
+
     }
 }

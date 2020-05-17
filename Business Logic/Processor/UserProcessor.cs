@@ -33,7 +33,7 @@ namespace Business_Logic.Processor
             unitOfWork.CustomerRepository.Add(customer);
         } 
 
-        public static UserModel UserLogin(UserModel inputModel)
+        public static UserModel UserLogin(UserModel userModel)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
@@ -42,8 +42,8 @@ namespace Business_Logic.Processor
             totalAcounts.AddRange(unitOfWork.AdminRepository.Get());
 
             var Result = totalAcounts
-                .Where(x => SecurePasswordHasher.Verify(inputModel.Password, x.Password) == true &&
-                x.EmailAddress == inputModel.Email)
+                .Where(x => SecurePasswordHasher.Verify(userModel.Password, x.Password) == true &&
+                x.EmailAddress == userModel.Email)
                 .SingleOrDefault();
 
             if (Result == null)
@@ -52,6 +52,18 @@ namespace Business_Logic.Processor
            var model = ConvertToModel(Result);
 
             return model;
+        }
+
+        public static void UpdateShoppingCart(Guid id,List<StoreItemModel> storeItemModels)
+        {
+           UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+           var StoreItems = StoreItemProcessor.ConvertModelToStoreItem(storeItemModels);
+
+            if (StoreItems == null)
+                return;
+
+            unitOfWork.CustomerRepository.UpdateShoppingCart(id, StoreItems);
         }
 
         public static UserModel ConvertToModel(User user)
@@ -64,7 +76,8 @@ namespace Business_Logic.Processor
             if (user is Customer)
             {
                 Customer customer = (Customer)user;
-                shoppingCart = StoreItemProcessor.ConvertStoreItemToModel(customer.ShoppingCart);
+
+                shoppingCart = StoreItemProcessor.GetStoreItemModelbyId(customer.ShoppingCart);
             }
 
             UserModel model = new UserModel
