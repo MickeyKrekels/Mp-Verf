@@ -72,6 +72,9 @@ namespace Business_Logic.Processor
         {
             List<StoreItemModel> models = new List<StoreItemModel>();
 
+            if (ids == null)
+                return null;
+
             foreach (var id in ids)
             {
                 var model = GetStoreItemModelbyId(id);

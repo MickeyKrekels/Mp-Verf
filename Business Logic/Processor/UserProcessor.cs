@@ -6,9 +6,6 @@ using Repositorie.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business_Logic.Processor
 {
@@ -18,7 +15,7 @@ namespace Business_Logic.Processor
         {
             if (model == null)
                 return;
-            
+
             string HashedPassowrd = SecurePasswordHasher.Hash(model.Password);
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
@@ -27,11 +24,11 @@ namespace Business_Logic.Processor
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 EmailAddress = model.Email,
-                Password = HashedPassowrd,               
+                Password = HashedPassowrd,
             };
 
             unitOfWork.CustomerRepository.Add(customer);
-        } 
+        }
 
         public static UserModel UserLogin(UserModel userModel)
         {
@@ -49,16 +46,16 @@ namespace Business_Logic.Processor
             if (Result == null)
                 return null;
 
-           var model = ConvertToModel(Result);
+            var model = ConvertToModel(Result);
 
             return model;
         }
 
-        public static void UpdateShoppingCart(Guid id,List<StoreItemModel> storeItemModels)
+        public static void UpdateShoppingCart(Guid id, List<StoreItemModel> storeItemModels)
         {
-           UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-           var StoreItems = StoreItemProcessor.ConvertModelToStoreItem(storeItemModels);
+            var StoreItems = StoreItemProcessor.ConvertModelToStoreItem(storeItemModels);
 
             if (StoreItems == null)
                 return;
@@ -68,7 +65,7 @@ namespace Business_Logic.Processor
 
         public static UserModel ConvertToModel(User user)
         {
-            if(user == null)
+            if (user == null)
                 return null;
 
             List<StoreItemModel> shoppingCart = new List<StoreItemModel>();
@@ -77,7 +74,12 @@ namespace Business_Logic.Processor
             {
                 Customer customer = (Customer)user;
 
-                shoppingCart = StoreItemProcessor.GetStoreItemModelbyId(customer.ShoppingCart);
+                var userShoppingCart = StoreItemProcessor.GetStoreItemModelbyId(customer.ShoppingCart);
+
+                if (userShoppingCart != null)
+                {
+                    shoppingCart = userShoppingCart;
+                }
             }
 
             UserModel model = new UserModel
@@ -133,7 +135,7 @@ namespace Business_Logic.Processor
         {
             var user = GetUser(id);
 
-            if(user is Customer)
+            if (user is Customer)
             {
                 return typeof(Customer).Name;
             }
