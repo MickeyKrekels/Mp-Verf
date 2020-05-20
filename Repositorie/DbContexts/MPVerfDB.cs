@@ -9,7 +9,7 @@ namespace Repositorie.DbContexts
     public class MPVerfDB : DbContext, IMPVerfDB
     {
         public MPVerfDB()
-           : base("mp-database")
+           : base("dbi436203")
         {
             Database.SetInitializer<MPVerfDB>(null);
         }

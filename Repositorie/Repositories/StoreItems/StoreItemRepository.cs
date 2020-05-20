@@ -34,7 +34,7 @@ namespace Repositorie.Repositories.StoreItems
         }
         public StoreItem Get(Guid id)
         {
-           var StoreItems = context.StoreItem.Where(x => x.Id == id).First();
+            var StoreItems = context.StoreItem.Where(x => x.Id == id).First();
 
             return StoreItems;
         }
@@ -65,13 +65,22 @@ namespace Repositorie.Repositories.StoreItems
         //Delete
         public void Remove(Guid id)
         {
-            var result = context.StoreItem.Where(x => x.Id == id).First();
+            var storeItem = Get(id);
+            var images = storeItem.Images;
 
             //log error
-            if (result == null)
+            if (storeItem == null)
                 return;
 
-            context.StoreItem.Remove(result);
+            if (images != null && images.Count > 0)
+            {
+                for (int i = 0; i < images.Count; i++)
+                {
+                    context.StoreImage.Remove(images[i]);
+                }
+            }
+
+            context.StoreItem.Remove(storeItem);
             context.SaveChanges();
         }
     }
