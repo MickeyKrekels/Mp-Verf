@@ -19,8 +19,6 @@ namespace Repositorie.UnitOfWorks
         private ICustomerRepository customerRepository;
         private IAdminRepository adminRepository;
         private IStoreItemRepository storeItemRepository;
-        //paint 
-
 
         public UnitOfWorkRepository() : base(new MPVerfDB())
         {

@@ -37,7 +37,7 @@ namespace Mp_WebApp.Controllers
                 var imageData = StoreItemProcessor.ConverToBytes(StoreImages);
                 model.Images = imageData;
             }
-
+            model.Id = Guid.NewGuid();
             StoreItemProcessor.CreateStoreItem(model);
 
             return RedirectToAction("AllProducts");

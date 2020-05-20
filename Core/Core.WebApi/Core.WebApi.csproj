@@ -55,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{72d38205-15e0-4bf1-86fc-2593ea9c15ec}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Imtosoft.ConvertionTools.Common\Imtosoft.ConvertionTools.Common.csproj">
       <Project>{57e240f0-3d5e-4053-9e5b-39d56b925f23}</Project>
       <Name>Imtosoft.ConvertionTools.Common</Name>

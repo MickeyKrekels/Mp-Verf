@@ -1,4 +1,4 @@
-﻿using Imtosoft.ConvertionTools.Common.ExtensionMethods;
+﻿using Common.ExtensionMethods;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
