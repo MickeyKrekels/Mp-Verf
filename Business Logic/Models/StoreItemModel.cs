@@ -1,4 +1,4 @@
-﻿using Core.Repositories.Entities;
+﻿using Core.Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -73,10 +73,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{72d38205-15e0-4bf1-86fc-2593ea9c15ec}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Imtosoft.ConvertionTools.Common\Imtosoft.ConvertionTools.Common.csproj">
       <Project>{57E240F0-3D5E-4053-9E5B-39D56B925F23}</Project>
       <Name>Imtosoft.ConvertionTools.Common</Name>

@@ -65,13 +65,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\Core\Core.Repositories\Core.Repositories.csproj">
+      <Project>{9bc061bf-3b09-4dad-878c-cd163c0f1f74}</Project>
+      <Name>Core.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Desktop\Core\Core.Shared\Core.Shared.csproj">
+      <Project>{50f807e4-9a83-450e-914d-d7f2b3220469}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Desktop\Core\Core.WebApi\Core.WebApi.csproj">
+      <Project>{192d27a2-e807-496d-8889-3a8df7dcf6d4}</Project>
+      <Name>Core.WebApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{72d38205-15e0-4bf1-86fc-2593ea9c15ec}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.Repositories\Core.Repositories.csproj">
-      <Project>{ACC10FBA-7DB0-458E-8C0B-548F6D6385F3}</Project>
-      <Name>Core.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repositorie\Repositorie.csproj">
       <Project>{30aff1bd-9a47-4108-8d4d-0002da2b130e}</Project>

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Shared.Entities;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Collections.Generic;
-using Core.Repositories.Entities;
 
 namespace Business_Logic.Models
 {

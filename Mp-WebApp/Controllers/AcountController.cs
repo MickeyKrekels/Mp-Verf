@@ -13,6 +13,12 @@ namespace Mp_WebApp.Controllers
 {
     public class AcountController : Controller
     {
+        // GET: Acount
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
         public ActionResult SignUp()
         {
             ViewBag.Message = "Please Sign up";
@@ -27,7 +33,7 @@ namespace Mp_WebApp.Controllers
             if (ModelState.IsValid)
             {
                 UserProcessor.CreateCustomer(model);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
 
             return View();
@@ -48,7 +54,7 @@ namespace Mp_WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserModel model)
-        { 
+        {
             ViewBag.Message = "Please Login";
 
             var user = UserProcessor.UserLogin(model);
