@@ -21,7 +21,7 @@ namespace RepositorieTests
         {
             UnitOfWorkRepository UnitOfWork = new UnitOfWorkRepository();
             Customer costumer = new Customer { Id = Guid.NewGuid(), Name = "mickey", EmailAddress = "Test", Password = "ww" };
-            UnitOfWork.CustomerRepository.Add(costumer);
+            //UnitOfWork.CustomerRepository.Add(costumer);
         }
         [TestMethod]
         public void CreateAdmin()
@@ -29,7 +29,7 @@ namespace RepositorieTests
             UnitOfWorkRepository UnitOfWork = new UnitOfWorkRepository();
             var hash = SecurePasswordHasher.Hash("Pieter123");
             Admin admin = new Admin { Id = Guid.NewGuid(), Name = "Pieter", EmailAddress = "mp-krekels@hetnet.nl", Password = hash };
-            UnitOfWork.AdminRepository.Add(admin);
+            //UnitOfWork.AdminRepository.Add(admin);
         }
     }
 }

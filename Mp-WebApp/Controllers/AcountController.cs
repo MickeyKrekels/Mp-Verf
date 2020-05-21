@@ -48,7 +48,7 @@ namespace Mp_WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserModel model)
-        { 
+        {
             ViewBag.Message = "Please Login";
 
             var user = UserProcessor.UserLogin(model);
@@ -62,11 +62,14 @@ namespace Mp_WebApp.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult UserList(int? i)
+        public ActionResult UserList(string search, int? i)
         {
             ViewBag.Message = "All users";
             var models = UserProcessor.ConvertAllUsersToModel();
-            return View(models.ToPagedList(i ?? 1, 10));
+            return View(models
+                .Where(x => search == null || x.Name.StartsWith(search))
+                .ToList()
+                .ToPagedList(i ?? 1, 10));
         }
 
         [Authorize(Roles = "Customer")]

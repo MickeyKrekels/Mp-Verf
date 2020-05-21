@@ -7,6 +7,7 @@ using PagedList.Mvc;
 using PagedList;
 using System;
 using System.Web.Security;
+using System.Linq;
 
 namespace Mp_WebApp.Controllers
 {
@@ -14,11 +15,15 @@ namespace Mp_WebApp.Controllers
     public class ProductsController : Controller
     {
         [AllowAnonymous]
-        public ActionResult AllProducts(int? i)
+        public ActionResult AllProducts(string search,int? i)
         {
             var StoreItems = StoreItemProcessor.ConvertAllStoreItemToModels();
 
-            return View(StoreItems.ToPagedList(i ?? 1, 5));
+
+            return View(StoreItems
+                .Where(x => search == null || x.Name.ToLower().StartsWith(search.ToLower()))
+                .ToList()
+                .ToPagedList(i ?? 1, 5));
         }
 
         public ActionResult AddProduct()

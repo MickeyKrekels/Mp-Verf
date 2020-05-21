@@ -12,6 +12,12 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+
+    @using (Html.BeginForm("UserList", "Acount", FormMethod.Get))
+    {
+        <input type="text" name="search" placeholder="Enter product name" />
+        <input type="submit" name="submit" value="Search" />
+    }
 </p>
 <table class="table">
     <tr>
@@ -55,4 +61,4 @@
     }
 
     </table>
-@Html.PagedListPager(Model, i => Url.Action("UserList", "Acount", new { i }))
+@Html.PagedListPager(Model, i => Url.Action("UserList", "Acount", new { i, search = Request.QueryString["Search"] } }))
