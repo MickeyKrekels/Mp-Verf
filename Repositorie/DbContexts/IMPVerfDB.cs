@@ -1,6 +1,6 @@
-﻿using System.Data.Entity;
-using Repositorie.Entities.Base;
+﻿using Repositorie.Entities.Base;
 using Repositorie.Entities.Users;
+using System.Data.Entity;
 
 namespace Repositorie.DbContexts
 {
@@ -8,7 +8,7 @@ namespace Repositorie.DbContexts
     {
         DbSet<Admin> Admin { get; set; }
         DbSet<Customer> Customer { get; set; }
-        DbSet<StoreItem> StoreItem { get; set; }
         DbSet<StoreImage> StoreImage { get; set; }
+        DbSet<StoreItem> StoreItem { get; set; }
     }
 }

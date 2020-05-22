@@ -74,7 +74,7 @@ namespace Business_Logic.Processor
             {
                 Customer customer = (Customer)user;
 
-                var userShoppingCart = StoreItemProcessor.GetStoreItemModelbyId(customer.ShoppingCart);
+                var userShoppingCart = StoreItemProcessor.ConvertStoreItemToModel(customer.ShoppingCart);
 
                 if (userShoppingCart != null)
                 {

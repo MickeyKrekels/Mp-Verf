@@ -59,22 +59,6 @@
       <Project>{72d38205-15e0-4bf1-86fc-2593ea9c15ec}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imtosoft.ConvertionTools.Common\Imtosoft.ConvertionTools.Common.csproj">
-      <Project>{57e240f0-3d5e-4053-9e5b-39d56b925f23}</Project>
-      <Name>Imtosoft.ConvertionTools.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Imtosoft.ConvertionTools\ConvertionTools.BusinessLogic\ConvertionTools.BusinessLogic.csproj">
-      <Project>{ef62d0fc-c86a-48a9-b74c-718a64f5e348}</Project>
-      <Name>ConvertionTools.BusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Imtosoft.ConvertionTools\ConvertionTools.RepositoriesImtosoft\ConvertionTools.RepositoriesImtosoft.csproj">
-      <Project>{513b09e5-ba06-48b3-b5f2-6bbf1de473b8}</Project>
-      <Name>ConvertionTools.RepositoriesImtosoft</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Imtosoft.ConvertionTools\ConvertionTools.RepositoriesParadox\ConvertionTools.RepositoriesParadox.csproj">
-      <Project>{aeb3b9d6-7edf-4a69-8b2a-651e4dd226c5}</Project>
-      <Name>ConvertionTools.RepositoriesParadox</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
       <Project>{cb0b8fc2-33b6-446c-8a86-b26f20945c93}</Project>
       <Name>Core.Shared</Name>

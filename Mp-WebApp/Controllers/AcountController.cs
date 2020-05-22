@@ -1,13 +1,10 @@
 ﻿using Business_Logic.Models;
 using Business_Logic.Processor;
-using PagedList.Mvc;
+using System.Web.Security;
+using System.Web.Mvc;
+using System.Linq;
 using PagedList;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
 
 namespace Mp_WebApp.Controllers
 {
@@ -67,7 +64,7 @@ namespace Mp_WebApp.Controllers
             ViewBag.Message = "All users";
             var models = UserProcessor.ConvertAllUsersToModel();
             return View(models
-                .Where(x => search == null || x.Name.StartsWith(search))
+                .Where(x => search == null || x.Name.ToLower().StartsWith(search.ToLower()))
                 .ToList()
                 .ToPagedList(i ?? 1, 10));
         }

@@ -39,7 +39,7 @@ namespace Repositorie.Repositories.Users
             if (user == null)
                 return;
 
-            user.ShoppingCart = storeItems.Select(x=>x.Id).ToList();
+            user.ShoppingCart = storeItems;
             context.Entry(user).CurrentValues.SetValues(storeItems);
             context.SaveChanges();
         }
