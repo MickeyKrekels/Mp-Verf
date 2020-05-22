@@ -64,14 +64,15 @@
   <ItemGroup>
     <Compile Include="DbContexts\IMPVerfDB.cs" />
     <Compile Include="DbContexts\MPVerfDB.cs" />
+    <Compile Include="Entities\Base\ShoppingCart.cs" />
     <Compile Include="Entities\Base\Specification.cs" />
     <Compile Include="Entities\Base\StoreImage.cs" />
     <Compile Include="Entities\Base\StoreItem.cs" />
     <Compile Include="Entities\Users\Admin.cs" />
     <Compile Include="Entities\Users\Customer.cs" />
-    <Compile Include="Migrations\202005221309494_UpdateStoreItem.cs" />
-    <Compile Include="Migrations\202005221309494_UpdateStoreItem.designer.cs">
-      <DependentUpon>202005221309494_UpdateStoreItem.cs</DependentUpon>
+    <Compile Include="Migrations\202005222246520_Test.cs" />
+    <Compile Include="Migrations\202005222246520_Test.designer.cs">
+      <DependentUpon>202005222246520_Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,8 +107,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005221309494_UpdateStoreItem.resx">
-      <DependentUpon>202005221309494_UpdateStoreItem.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005222246520_Test.resx">
+      <DependentUpon>202005222246520_Test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

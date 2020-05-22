@@ -10,5 +10,7 @@ namespace Repositorie.DbContexts
         DbSet<Customer> Customer { get; set; }
         DbSet<StoreImage> StoreImage { get; set; }
         DbSet<StoreItem> StoreItem { get; set; }
+        DbSet<ShoppingCart> ShoppingCart { get; set; }
+
     }
 }
