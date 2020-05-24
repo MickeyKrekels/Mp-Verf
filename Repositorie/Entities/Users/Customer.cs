@@ -11,6 +11,7 @@ namespace Repositorie.Entities.Users
 {
     public class Customer : User
     {
+        [ForeignKey("Customer_Id")]
         public virtual List<ShoppingCart> ShoppingCart { get; set; }
     }
 }

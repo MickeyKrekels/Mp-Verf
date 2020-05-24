@@ -83,22 +83,29 @@ namespace Mp_WebApp.Controllers
             return View(result.ShoppingCart);
         }
 
-        public ActionResult AddToShoppingCart(Guid storeItemId)
+        [Authorize(Roles = "Customer")]
+        public ActionResult AddToShoppingCart(Guid id)
         {
-            // Gets the current user's shopping cart
             string identity = User.Identity.Name;
-            Guid id = Guid.Parse(identity);
+            Guid userId = Guid.Parse(identity);
 
-            var user = UserProcessor.ConvertUserToModel(id);
-            var storeItem = StoreItemProcessor.GetStoreItemModelbyId(storeItemId);
-
-            user.ShoppingCart.Add(storeItem);
-
-            UserProcessor.UpdateShoppingCart(id, user.ShoppingCart);
+            var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
+            UserProcessor.AddToShoppingCart(userId, storeItem);
 
             return RedirectToAction("ShoppingCart","Acount");
         }
 
+        [Authorize(Roles = "Customer")]
+        public ActionResult RemoveFromShoppingCart(Guid id)
+        {
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity);
+
+            var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
+            UserProcessor.RemoveFromShoppingCart(userId, storeItem);
+
+            return RedirectToAction("ShoppingCart", "Acount");
+        }
 
     }
 }

@@ -59,7 +59,7 @@
 
         @if (User.IsInRole("Customer"))
         {
-            @Html.ActionLink("Add to Cart", "AddToShoppingCart", "Acount", new { storeItemId = Model.Id },new { @class = "btn btn-info" })
+            @Html.ActionLink("Add to Cart", "AddToShoppingCart", "Acount", new { id = Model.Id },new { @class = "btn btn-info" })
         }
 
     </dl>

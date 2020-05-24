@@ -16,8 +16,6 @@ namespace Repositorie.DbContexts
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Customer>().HasMany(e => e.ShoppingCart).WithMany();
-
             modelBuilder.HasDefaultSchema("dbo");
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.AddBefore<ForeignKeyAssociationMultiplicityConvention>(new CustomForeignKeyDiscoveryConvention());

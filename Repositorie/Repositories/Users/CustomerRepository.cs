@@ -44,32 +44,38 @@ namespace Repositorie.Repositories.Users
             context.SaveChanges();
         }
 
-        public void UpdateShoppingCart(Guid id, List<StoreItem> storeItems)
+        public void AddToShoppingCart(Guid id, StoreItem storeItem)
         {
             var user = context.Customer.Where(x => x.Id == id).First();
-            var shoppingCart = context.ShoppingCart.Where(x => x.Id == id).ToList();
 
             if (user == null)
                 return;
 
-            if (storeItems != null)
+            ShoppingCart sc = new ShoppingCart
             {
-                foreach (var storeItem in storeItems)
-                {
-                    if (shoppingCart.Count == 0 || shoppingCart.Where(x => x.StoreItemId == storeItem.Id).First() == null)
-                    {
-                        ShoppingCart sc = new ShoppingCart
-                        {
-                            Id = Guid.NewGuid(),
-                            StoreItemId = storeItem.Id,
-                        };
+                Id = Guid.NewGuid(),
+                StoreItemId = storeItem.Id,
+            };
+            user.ShoppingCart.Add(sc);
 
-                        user.ShoppingCart.Add(sc);
-                    }
-                }
-            }
 
             context.SaveChanges();
         }
+        public void RemoveFromShoppingCart(Guid id, StoreItem storeItem)
+        {
+            var user = context.Customer.Where(x => x.Id == id).First();
+
+            if (user == null)
+                return;
+
+            var userItem = user.ShoppingCart.Where(x => x.StoreItemId == storeItem.Id).First();
+
+            if (userItem == null)
+                return;
+
+            context.ShoppingCart.Remove(userItem);
+            context.SaveChanges();
+        }
+
     }
 }

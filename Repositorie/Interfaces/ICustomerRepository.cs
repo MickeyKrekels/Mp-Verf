@@ -9,6 +9,7 @@ namespace Repositorie.Interfaces.Repositories
     {
         void Add(Customer customer);
         List<Customer> Get();
-        void UpdateShoppingCart(Guid id, List<StoreItem> storeItems);
+        void AddToShoppingCart(Guid id, StoreItem storeItems);
+        void RemoveFromShoppingCart(Guid id, StoreItem storeItems);
     }
 }

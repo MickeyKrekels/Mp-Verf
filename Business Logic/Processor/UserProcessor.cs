@@ -51,16 +51,27 @@ namespace Business_Logic.Processor
             return model;
         }
 
-        public static void UpdateShoppingCart(Guid id, List<StoreItemModel> storeItemModels)
+        public static void AddToShoppingCart(Guid id, StoreItemModel storeItemModel)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var StoreItems = StoreItemProcessor.ConvertModelToStoreItem(storeItemModels);
+            var StoreItem = StoreItemProcessor.ConvertModelToStoreItem(storeItemModel);
 
-            if (StoreItems == null)
+            if (StoreItem == null)
                 return;
 
-            unitOfWork.CustomerRepository.UpdateShoppingCart(id, StoreItems);
+            unitOfWork.CustomerRepository.AddToShoppingCart(id, StoreItem);
+        }
+        public static void RemoveFromShoppingCart(Guid id, StoreItemModel storeItemModel)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            var StoreItem = StoreItemProcessor.ConvertModelToStoreItem(storeItemModel);
+
+            if (StoreItem == null)
+                return;
+
+            unitOfWork.CustomerRepository.RemoveFromShoppingCart(id, StoreItem);
         }
 
         public static UserModel ConvertToModel(User user)
