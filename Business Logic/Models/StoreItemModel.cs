@@ -26,6 +26,7 @@ namespace Business_Logic.Models
         public decimal Price { get; set; }
 
         [Display(Name = "Discount Price")]
+        [Range(0, 100,ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int Discount { get; set; }
 
         public decimal PriceWithDiscount

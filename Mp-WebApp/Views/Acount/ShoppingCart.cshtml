@@ -51,8 +51,8 @@
         <div>
             <text>
                 Subtotal&nbsp;&nbsp;:&nbsp; € @Decimal.Round(Model.Sum(x => x.PriceWithDiscount), 2) <br>
-                Added tax 21%&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => x.PriceWithDiscount) * (decimal)0.21), 2) <br>
-                Total&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => x.PriceWithDiscount) * (decimal)1.21), 2)
+                Added tax 21%&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => (x.PriceWithDiscount * (decimal)0.21))), 2) <br>
+                Total&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => (x.PriceWithDiscount * (decimal)1.21))), 2)
             </text>
             <br>
             @Html.ActionLink("Check Out", "SendPaymentEmail", "Acount", new { @class = "btn btn-info" })
