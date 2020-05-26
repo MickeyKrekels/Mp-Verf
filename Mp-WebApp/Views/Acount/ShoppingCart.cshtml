@@ -46,16 +46,19 @@
 
 <tr>
     <td>
+        @if(Model.Count() != 0)
+        {
         <div>
             <text>
-                Subtotal      : € @Decimal.Round(Model.Sum(x => x.Price), 2) <br>
-                Added tax 21% : € @Decimal.Round((Model.Sum(x => x.Price) * (decimal)0.21), 2) <br>
-                Total         : € @Decimal.Round((Model.Sum(x => x.Price) * (decimal)1.21), 2)
+                Subtotal&nbsp;&nbsp;: € @Decimal.Round(Model.Sum(x => x.Price), 2) <br>
+                Added tax 21%&nbsp;&nbsp;: € @Decimal.Round((Model.Sum(x => x.Price) * (decimal)0.21), 2) <br>
+                Total&nbsp;&nbsp;: € @Decimal.Round((Model.Sum(x => x.Price) * (decimal)1.21), 2)
             </text>
             <br>
-            @Html.ActionLink("Check Out", "ShoppingCart", "Acount", new { @class = "btn btn-info" })
+            @Html.ActionLink("Check Out", "SendPaymentEmail", "Acount", new { @class = "btn btn-info" })
         </div>
 
+        }
     </td>
 </tr>
 

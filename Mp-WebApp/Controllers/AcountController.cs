@@ -5,6 +5,9 @@ using System.Web.Mvc;
 using System.Linq;
 using PagedList;
 using System;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace Mp_WebApp.Controllers
 {
@@ -75,12 +78,12 @@ namespace Mp_WebApp.Controllers
             string identity = User.Identity.Name;
             Guid id = Guid.Parse(identity);
 
-            var result = UserProcessor.ConvertUserToModel(id);
+            var userModel = UserProcessor.ConvertUserToModel(id);
 
-            if(result == null)
+            if (userModel == null)
                 return View();
 
-            return View(result.ShoppingCart);
+            return View(userModel.ShoppingCart);
         }
 
         [Authorize(Roles = "Customer")]
@@ -92,7 +95,7 @@ namespace Mp_WebApp.Controllers
             var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
             UserProcessor.AddToShoppingCart(userId, storeItem);
 
-            return RedirectToAction("ShoppingCart","Acount");
+            return RedirectToAction("ShoppingCart", "Acount");
         }
 
         [Authorize(Roles = "Customer")]
@@ -105,6 +108,59 @@ namespace Mp_WebApp.Controllers
             UserProcessor.RemoveFromShoppingCart(userId, storeItem);
 
             return RedirectToAction("ShoppingCart", "Acount");
+        }
+        public ActionResult SendPaymentEmail()
+        {
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity);
+
+            var userModel = UserProcessor.ConvertUserToModel(userId);
+
+            if (!SendEmail(userId, "MP-Verf Order confirmation email", "test"))
+            {
+                //email did not send do stuff
+
+                //return
+            }
+            //clear item list 
+            foreach (var storeItem in userModel.ShoppingCart)
+            {
+                UserProcessor.RemoveFromShoppingCart(userId, storeItem);
+            } 
+
+            return RedirectToAction("ShoppingCart", "Acount");
+        }
+        public bool SendEmail(Guid userId ,string subject,string emailBody)
+        {
+            try
+            {
+
+                var userModel = UserProcessor.ConvertUserToModel(userId);
+
+                string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
+                string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                // Set encrypted connection to true
+                client.EnableSsl = true;
+                client.Timeout = 100000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                // Whrite email
+                MailMessage mailMessage = new MailMessage(senderEmail, userModel.Email, subject, emailBody);
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+
+                client.Send(mailMessage);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
         }
 
     }
