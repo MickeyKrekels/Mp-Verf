@@ -25,6 +25,20 @@ namespace Business_Logic.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
+        [Display(Name = "Discount Price")]
+        public int Discount { get; set; }
+
+        public decimal PriceWithDiscount
+        {
+            get
+            {
+                if (Discount <= 0)
+                {
+                    return Price;
+                }
+                return Decimal.Round(Price - ((Discount / 100m) * Price),2);
+            }
+        }
         public List<Byte[]> Images { get; set; }
         public List<SpecificationModel> Specifications { get; set; }
     }

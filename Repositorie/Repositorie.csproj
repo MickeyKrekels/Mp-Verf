@@ -74,6 +74,10 @@
     <Compile Include="Migrations\202005222246520_Test.designer.cs">
       <DependentUpon>202005222246520_Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005261408580_AddedDiscountPercentage.cs" />
+    <Compile Include="Migrations\202005261408580_AddedDiscountPercentage.designer.cs">
+      <DependentUpon>202005261408580_AddedDiscountPercentage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Base\User.cs" />
@@ -110,6 +114,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202005222246520_Test.resx">
       <DependentUpon>202005222246520_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005261408580_AddedDiscountPercentage.resx">
+      <DependentUpon>202005261408580_AddedDiscountPercentage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

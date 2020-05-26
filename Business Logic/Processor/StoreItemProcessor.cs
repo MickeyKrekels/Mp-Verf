@@ -128,6 +128,7 @@ namespace Business_Logic.Processor
                 Name = model.Name,
                 Discription = model.Discription,
                 Price = model.Price,
+                DiscountPercentage = model.Discount,
                 Brand = model.Brand,
                 Images = StoreImages,
                 Specification = Specifications
@@ -174,33 +175,6 @@ namespace Business_Logic.Processor
             return models;
         }
 
-        public static byte[] ConverToBytes(HttpPostedFileBase file)
-        {
-            if (file == null)
-                return null;
-
-            var length = file.InputStream.Length; //Length: 103050706
-            byte[] fileData = null;
-            using (var binaryReader = new BinaryReader(file.InputStream))
-            {
-                fileData = binaryReader.ReadBytes(file.ContentLength);
-            }
-            return fileData;
-        }
-
-        public static List<byte[]> ConverToBytes(List<HttpPostedFileBase> files)
-        {
-            if (files == null)
-                return null;
-
-            List<Byte[]> imageData = new List<Byte[]>();
-            foreach (var imageFileBase in files)
-            {
-                var bytes = ConverToBytes(imageFileBase);
-                imageData.Add(bytes);
-            }
-            return imageData;
-        }
 
         public static StoreItemModel ConvertStoreItemToModel(StoreItem storeItem)
         {
@@ -245,6 +219,7 @@ namespace Business_Logic.Processor
                 Discription = storeItem.Discription,
                 Brand = storeItem.Brand,
                 Price = storeItem.Price,
+                Discount = storeItem.DiscountPercentage,
                 Images = storeImages,
                 Specifications = specifications,
             };
@@ -263,6 +238,33 @@ namespace Business_Logic.Processor
             }
 
             return models;
+        }
+        public static byte[] ConverToBytes(HttpPostedFileBase file)
+        {
+            if (file == null)
+                return null;
+
+            var length = file.InputStream.Length; //Length: 103050706
+            byte[] fileData = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                fileData = binaryReader.ReadBytes(file.ContentLength);
+            }
+            return fileData;
+        }
+
+        public static List<byte[]> ConverToBytes(List<HttpPostedFileBase> files)
+        {
+            if (files == null)
+                return null;
+
+            List<Byte[]> imageData = new List<Byte[]>();
+            foreach (var imageFileBase in files)
+            {
+                var bytes = ConverToBytes(imageFileBase);
+                imageData.Add(bytes);
+            }
+            return imageData;
         }
 
         #endregion

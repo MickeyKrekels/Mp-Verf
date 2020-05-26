@@ -35,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.PriceWithDiscount)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", "Products", new { id = item.Id }, null) |
@@ -50,9 +50,9 @@
         {
         <div>
             <text>
-                Subtotal&nbsp;&nbsp;: € @Decimal.Round(Model.Sum(x => x.Price), 2) <br>
-                Added tax 21%&nbsp;&nbsp;: € @Decimal.Round((Model.Sum(x => x.Price) * (decimal)0.21), 2) <br>
-                Total&nbsp;&nbsp;: € @Decimal.Round((Model.Sum(x => x.Price) * (decimal)1.21), 2)
+                Subtotal&nbsp;&nbsp;:&nbsp; € @Decimal.Round(Model.Sum(x => x.PriceWithDiscount), 2) <br>
+                Added tax 21%&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => x.PriceWithDiscount) * (decimal)0.21), 2) <br>
+                Total&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => x.PriceWithDiscount) * (decimal)1.21), 2)
             </text>
             <br>
             @Html.ActionLink("Check Out", "SendPaymentEmail", "Acount", new { @class = "btn btn-info" })
