@@ -26,7 +26,7 @@ namespace Business_Logic.Models
         [Compare("Password",ErrorMessage = "The Password and ConfirmPassword must match.") ]
         public string ConfirmPassword { get; set; }
 
-        public List<StoreItemModel> ShoppingCart { get; set; }
+        public List<ShoppingCartModel> ShoppingCart { get; set; }
 
 }
 }

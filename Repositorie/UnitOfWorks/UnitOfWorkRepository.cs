@@ -19,6 +19,7 @@ namespace Repositorie.UnitOfWorks
         private ICustomerRepository customerRepository;
         private IAdminRepository adminRepository;
         private IStoreItemRepository storeItemRepository;
+        private IUserCommentRepository userCommentRepository;
 
         public UnitOfWorkRepository() : base(new MPVerfDB())
         {
@@ -58,6 +59,17 @@ namespace Repositorie.UnitOfWorks
                     storeItemRepository = new StoreItemRepository(DbContext);
                 }
                 return storeItemRepository;
+            }
+        }
+        public IUserCommentRepository UserCommentRepository
+        {
+            get
+            {
+                if (userCommentRepository == null)
+                {
+                    userCommentRepository = new UserCommentRepository(DbContext);
+                }
+                return userCommentRepository;
             }
         }
 

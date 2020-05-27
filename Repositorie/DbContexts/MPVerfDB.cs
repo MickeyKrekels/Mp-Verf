@@ -30,5 +30,7 @@ namespace Repositorie.DbContexts
         public DbSet<StoreImage> StoreImage { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
 
+        public DbSet<UserComment> UserComment { get; set; }
+
     }
 }

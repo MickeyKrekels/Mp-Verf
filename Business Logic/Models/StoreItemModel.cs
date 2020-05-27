@@ -25,7 +25,7 @@ namespace Business_Logic.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        [Display(Name = "Discount Price")]
+        [Display(Name = "Product Discount")]
         [Range(0, 100,ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int Discount { get; set; }
 
@@ -40,7 +40,10 @@ namespace Business_Logic.Models
                 return Decimal.Round(Price - ((Discount / 100m) * Price),2);
             }
         }
+
         public List<Byte[]> Images { get; set; }
         public List<SpecificationModel> Specifications { get; set; }
+        public List<CommentModel> Comments { get; set; }
+
     }
 }

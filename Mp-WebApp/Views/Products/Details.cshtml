@@ -33,14 +33,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Discription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Discription)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Brand)
         </dt>
 
@@ -49,6 +41,15 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discription)
+        </dd>
+        <br>
+        <br>
+        <dt>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
 
@@ -56,19 +57,22 @@
             @Html.DisplayFor(model => model.Price)
 
         </dd>
+        
         @if (Model.Discount > 0)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.Discount)
             </dt>
-            
+
             <dd>
-                @Html.DisplayFor(model => model.Discount)%              
+                @Html.DisplayFor(model => model.Discount)%
             </dd>
-            <dd>
+            <content>
                 <br>
                 <text>New Price is: €@Model.PriceWithDiscount</text>
-            </dd>
+                <br>
+                <br>
+            </content>
 
         }
 
@@ -79,7 +83,7 @@
         }
 
     </dl>
-</div>
 <p>
     @Html.ActionLink("Back to List", "AllProducts")
 </p>
+</div>

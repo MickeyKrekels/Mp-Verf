@@ -93,7 +93,7 @@ namespace Mp_WebApp.Controllers
             Guid userId = Guid.Parse(identity);
 
             var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
-            UserProcessor.AddToShoppingCart(userId, storeItem);
+            ShoppingCartProcessor.AddToShoppingCart(userId, storeItem);
 
             return RedirectToAction("ShoppingCart", "Acount");
         }
@@ -105,7 +105,7 @@ namespace Mp_WebApp.Controllers
             Guid userId = Guid.Parse(identity);
 
             var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
-            UserProcessor.RemoveFromShoppingCart(userId, storeItem);
+            ShoppingCartProcessor.RemoveFromShoppingCart(userId, storeItem);
 
             return RedirectToAction("ShoppingCart", "Acount");
         }
@@ -119,13 +119,13 @@ namespace Mp_WebApp.Controllers
             if (!SendEmail(userId, "MP-Verf Order confirmation email", "test"))
             {
                 //email did not send do stuff
-
+                
                 //return
             }
             //clear item list 
             foreach (var storeItem in userModel.ShoppingCart)
             {
-                UserProcessor.RemoveFromShoppingCart(userId, storeItem);
+                ShoppingCartProcessor.RemoveFromShoppingCart(userId, storeItem);
             } 
 
             return RedirectToAction("ShoppingCart", "Acount");

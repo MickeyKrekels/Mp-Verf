@@ -1,17 +1,19 @@
 ﻿using Business_Logic.Models;
 using Common.ExtensionMethods;
 using Repositorie.Entities.Base;
+using Repositorie.Entities.Users;
 using Repositorie.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 
 namespace Business_Logic.Processor
 {
     public static class StoreItemProcessor
     {
-        #region CRUD
+        #region CRUD StoreItem
 
         public static void CreateStoreItem(StoreItemModel model)
         {
@@ -53,6 +55,48 @@ namespace Business_Logic.Processor
 
         #endregion
 
+        #region CRUD Comments
+
+        public static void AddComment(Guid userId, Guid storeItemId, string text)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            var storeItem = GetStoreItembyId(storeItemId);
+
+            UserComment comment = new UserComment
+            {
+                Id = Guid.NewGuid(),
+                OwnerId = userId,
+                Text = text,
+                ChildComments = new List<UserComment>(),       
+            };
+            storeItem.UserComments.Add(comment);
+
+            unitOfWork.StoreItemRepository.Update(storeItem);
+        }
+
+        public static void UpdateComment(Guid CommentId, Guid storeItemId, string newText)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            var storeItem = GetStoreItembyId(storeItemId);
+
+            unitOfWork.UserCommentRepository.Update(CommentId, newText);
+        }
+
+        public static void RemoveComment(Guid CommentId)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            unitOfWork.UserCommentRepository.Remove(CommentId);
+        }
+        public static void GetUserComments(Guid userId)
+        {
+
+        }
+
+        #endregion
+
         #region ConvertFunctions
 
         public static StoreItemModel GetStoreItemModelbyId(Guid id)
@@ -66,6 +110,16 @@ namespace Business_Logic.Processor
             StoreItemModel model = ConvertStoreItemToModel(result);
 
             return model;
+        }
+        public static StoreItem GetStoreItembyId(Guid id)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+            var result = unitOfWork.StoreItemRepository.Get(id);
+
+            if (result == null)
+                return null;
+
+            return result;
         }
 
         public static List<StoreItemModel> GetStoreItemModelbyId(List<Guid> ids)
@@ -83,6 +137,7 @@ namespace Business_Logic.Processor
 
             return models;
         }
+
 
         public static StoreItem ConvertModelToStoreItem(StoreItemModel model)
         {
@@ -184,6 +239,7 @@ namespace Business_Logic.Processor
 
             List<Byte[]> storeImages = new List<Byte[]>();
             List<SpecificationModel> specifications = new List<SpecificationModel>();
+            List<CommentModel> comments = new List<CommentModel>();
 
             if (storeItem.Images != null)
             {
@@ -200,15 +256,19 @@ namespace Business_Logic.Processor
 
             if (storeItem.Specification != null)
             {
-                foreach (var specificationModel in storeItem.Specification)
+                foreach (var specification in storeItem.Specification)
                 {
-                    SpecificationModel specification = new SpecificationModel
-                    {
-                        Name = specificationModel.Name,
-                        Description = specificationModel.Description
-                    };
+                    SpecificationModel specificationModel = ConvertToSpecificationModel(specification);
+                    specifications.Add(specificationModel);
+                }
+            }
 
-                    specifications.Add(specification);
+            if (storeItem.UserComments != null)
+            {
+                foreach (var userComment in storeItem.UserComments)
+                {
+                    CommentModel commentModel = ConvertToCommentModel(userComment);
+                    comments.Add(commentModel);
                 }
             }
 
@@ -222,6 +282,7 @@ namespace Business_Logic.Processor
                 Discount = storeItem.DiscountPercentage,
                 Images = storeImages,
                 Specifications = specifications,
+                Comments = comments,
             };
 
             return model;
@@ -239,12 +300,37 @@ namespace Business_Logic.Processor
 
             return models;
         }
+        private static CommentModel ConvertToCommentModel(UserComment userComment)
+        {
+
+            CommentModel commentModel = new CommentModel
+            {
+                Id = userComment.Id,
+                Text = userComment.Text,
+                DataCreated = userComment.DataCreated,
+                //ChildComments = userComment.ChildComments,
+                OwnerId = userComment.OwnerId,
+            };
+            return commentModel;
+        }
+
+        private static SpecificationModel ConvertToSpecificationModel(Specification specification)
+        {
+            SpecificationModel specificationModel = new SpecificationModel
+            {
+                Name = specification.Name,
+                Description = specification.Description
+            };
+
+            return specificationModel;
+        }
+
         public static byte[] ConverToBytes(HttpPostedFileBase file)
         {
             if (file == null)
                 return null;
 
-            var length = file.InputStream.Length; //Length: 103050706
+            //var length = file.InputStream.Length; //Length: 103050706
             byte[] fileData = null;
             using (var binaryReader = new BinaryReader(file.InputStream))
             {

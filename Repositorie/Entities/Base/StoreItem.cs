@@ -1,4 +1,5 @@
 ﻿using Core.Repositories.Entities;
+using Repositorie.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace Repositorie.Entities.Base
         public string Brand { get; set; }
         public decimal Price { get; set; }
         public int DiscountPercentage { get; set; }
-
         public virtual List<Specification> Specification { get; set; }
         public virtual List<StoreImage> Images { get; set; }
+        public virtual List<UserComment> UserComments { get; set; }
     }
 }

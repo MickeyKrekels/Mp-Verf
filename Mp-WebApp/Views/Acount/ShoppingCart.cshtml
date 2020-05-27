@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Business_Logic.Models.StoreItemModel>
+﻿@model IEnumerable<Business_Logic.Models.ShoppingCartModel>
 
 @{
     ViewBag.Title = "ShoppingCart";
@@ -9,7 +9,7 @@
 
 <h2>My ShoppingCart</h2>
 
-<text>Total items @Model.Count()</text>
+<text>Total items @Model.Sum(x=> x.Amount)</text>
 
 <table class="table">
     <tr>
@@ -20,28 +20,34 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                <img src="data:image;base64,@System.Convert.ToBase64String(item.Images[0])" width="50" height="50" />
-            </td>
+<tr>
+    <td>
+        <img src="data:image;base64,@System.Convert.ToBase64String(item.Images[0])" width="50" height="50" />
+    </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriceWithDiscount)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", "Products", new { id = item.Id }, null) |
-                @Html.ActionLink("Remove", "RemoveFromShoppingCart", "Acount", new { id = item.Id }, null)
-            </td>
-        </tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Amount)
+    </td>
+    <td>
+        € @Html.DisplayFor(modelItem => item.PriceTimesAmount)
+    </td>
+    <td>
+        @Html.ActionLink("Details", "Details", "Products", new { id = item.Id }, null) |
+        @Html.ActionLink("Remove", "RemoveFromShoppingCart", "Acount", new { id = item.Id }, null)
+    </td>
+</tr>
     }
 
 <tr>
@@ -50,10 +56,11 @@
         {
         <div>
             <text>
-                Subtotal&nbsp;&nbsp;:&nbsp; € @Decimal.Round(Model.Sum(x => x.PriceWithDiscount), 2) <br>
-                Added tax 21%&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => (x.PriceWithDiscount * (decimal)0.21))), 2) <br>
-                Total&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => (x.PriceWithDiscount * (decimal)1.21))), 2)
+                Subtotal&nbsp;&nbsp;:&nbsp; € @Decimal.Round(Model.Sum(x => (x.PriceWithDiscount * x.Amount)), 2) <br>
+                Added tax 21%&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => ((x.PriceWithDiscount * x.Amount) * (decimal)0.21))), 2) <br>
+                Total&nbsp;&nbsp;:&nbsp; € @Decimal.Round((Model.Sum(x => ((x.PriceWithDiscount * x.Amount) * (decimal)1.21))), 2)
             </text>
+            <br>
             <br>
             @Html.ActionLink("Check Out", "SendPaymentEmail", "Acount", new { @class = "btn btn-info" })
         </div>

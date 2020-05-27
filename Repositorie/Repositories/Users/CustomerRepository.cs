@@ -44,19 +44,14 @@ namespace Repositorie.Repositories.Users
             context.SaveChanges();
         }
 
-        public void AddToShoppingCart(Guid id, StoreItem storeItem)
+        public void AddToShoppingCart(Guid id, ShoppingCart shoppingCart)
         {
             var user = context.Customer.Where(x => x.Id == id).First();
 
             if (user == null)
                 return;
 
-            ShoppingCart sc = new ShoppingCart
-            {
-                Id = Guid.NewGuid(),
-                StoreItemId = storeItem.Id,
-            };
-            user.ShoppingCart.Add(sc);
+            user.ShoppingCart.Add(shoppingCart);
 
 
             context.SaveChanges();
@@ -74,6 +69,21 @@ namespace Repositorie.Repositories.Users
                 return;
 
             context.ShoppingCart.Remove(userItem);
+            context.SaveChanges();
+        }
+        public void UpdateShoppingCart(Guid id, Guid shoppingCartId,int amount)
+        {
+            var user = context.Customer.Where(x => x.Id == id).First();
+
+            if (user == null)
+                return;
+
+            var result = context.ShoppingCart.Where(x => x.Id == shoppingCartId).First();
+
+            if (result == null)
+                return;
+
+            result.Amount = amount;
             context.SaveChanges();
         }
 
