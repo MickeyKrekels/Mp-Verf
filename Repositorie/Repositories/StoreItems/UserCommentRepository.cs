@@ -63,7 +63,7 @@ namespace Repositorie.Repositories.StoreItems
             if (comment == null)
                 return;
 
-            comment.ChildComments.Remove(comment);
+            context.UserComment.Remove(comment);
             context.SaveChanges();
 
         }

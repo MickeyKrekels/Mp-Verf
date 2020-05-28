@@ -1,4 +1,5 @@
-﻿using Repositorie.Entities.Users;
+﻿using Business_Logic.Models;
+using Repositorie.Entities.Users;
 using Repositorie.UnitOfWorks;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,18 @@ namespace Business_Logic.Processor
 {
     public static class CommentProcessor
     {
-        public static void AddComment(Guid userId, Guid storeItemId, string text)
+        public static void AddComment(Guid userId, Guid StoreItemId, CommentModel commentModel)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var storeItem = StoreItemProcessor.GetStoreItembyId(storeItemId);
+            var storeItem = StoreItemProcessor.GetStoreItembyId(StoreItemId);
 
             UserComment comment = new UserComment
             {
                 Id = Guid.NewGuid(),
                 OwnerId = userId,
-                Text = text,
-                ChildComments = new List<UserComment>(),
+                Text = commentModel.Text,
+                ProductRating = commentModel.ProductRating,
             };
             storeItem.UserComments.Add(comment);
 

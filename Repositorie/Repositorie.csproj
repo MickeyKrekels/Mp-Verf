@@ -91,6 +91,10 @@
     <Compile Include="Migrations\202005271730463_InstockUpdate.designer.cs">
       <DependentUpon>202005271730463_InstockUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005282110275_CommentScoreUpdate.cs" />
+    <Compile Include="Migrations\202005282110275_CommentScoreUpdate.designer.cs">
+      <DependentUpon>202005282110275_CommentScoreUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Users\User.cs" />
@@ -142,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005271730463_InstockUpdate.resx">
       <DependentUpon>202005271730463_InstockUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005282110275_CommentScoreUpdate.resx">
+      <DependentUpon>202005282110275_CommentScoreUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
