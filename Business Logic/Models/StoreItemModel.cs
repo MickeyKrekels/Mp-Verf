@@ -29,6 +29,9 @@ namespace Business_Logic.Models
         [Range(0, 100,ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int Discount { get; set; }
 
+        [Display(Name = "Products InStock")]
+        [Range(1, 10000, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        public int InStock { get; set; }
         public decimal PriceWithDiscount
         {
             get
@@ -41,7 +44,7 @@ namespace Business_Logic.Models
             }
         }
 
-        public List<Byte[]> Images { get; set; }
+        public List<ImageModel> Images { get; set; }
         public List<SpecificationModel> Specifications { get; set; }
         public List<CommentModel> Comments { get; set; }
 

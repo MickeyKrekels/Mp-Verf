@@ -49,7 +49,7 @@ namespace Repositorie.Repositories.StoreItems
         }
 
         //Update
-        public void Update(StoreItem storeItem)
+        public void UpdateStoreImages(StoreItem storeItem)
         {
             var result = context.StoreItem.Where(x => x.Id == storeItem.Id).First();
 
@@ -58,6 +58,17 @@ namespace Repositorie.Repositories.StoreItems
                 return;
 
             result.Images = storeItem.Images;
+            context.Entry(result).CurrentValues.SetValues(storeItem);
+            context.SaveChanges();
+        }
+        public void Update(StoreItem storeItem)
+        {
+            var result = context.StoreItem.Where(x => x.Id == storeItem.Id).First();
+
+            //log error
+            if (result == null)
+                return;
+
             context.Entry(result).CurrentValues.SetValues(storeItem);
             context.SaveChanges();
         }

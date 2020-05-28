@@ -104,8 +104,8 @@ namespace Mp_WebApp.Controllers
             string identity = User.Identity.Name;
             Guid userId = Guid.Parse(identity);
 
-            var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
-            ShoppingCartProcessor.RemoveFromShoppingCart(userId, storeItem);
+            var shoppingModel = ShoppingCartProcessor.GetShoppingModel(id);
+            ShoppingCartProcessor.RemoveFromShoppingCart(userId, shoppingModel);
 
             return RedirectToAction("ShoppingCart", "Acount");
         }

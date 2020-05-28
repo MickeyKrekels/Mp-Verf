@@ -57,8 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\ShoppingCartModel.cs" />
     <Compile Include="Models\SpecificationModel.cs" />
+    <Compile Include="Processor\CommentProcessor.cs" />
     <Compile Include="Processor\ShoppingCartProcessor.cs" />
     <Compile Include="Processor\UserProcessor.cs" />
     <Compile Include="Processor\StoreItemProcessor.cs" />

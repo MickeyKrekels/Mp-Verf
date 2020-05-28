@@ -14,6 +14,8 @@ namespace Business_Logic.Models
         public int Amount { get; set; }
         public DateTime DataCreated { get; set; }
 
+        public Guid StoreItemId { get; set; }
+
         public decimal PriceTimesAmount
         {
             get

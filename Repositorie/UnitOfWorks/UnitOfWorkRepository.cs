@@ -20,6 +20,7 @@ namespace Repositorie.UnitOfWorks
         private IAdminRepository adminRepository;
         private IStoreItemRepository storeItemRepository;
         private IUserCommentRepository userCommentRepository;
+        private IShoppingCartRepository shoppingCartRepository;
 
         public UnitOfWorkRepository() : base(new MPVerfDB())
         {
@@ -72,7 +73,17 @@ namespace Repositorie.UnitOfWorks
                 return userCommentRepository;
             }
         }
-
+        public IShoppingCartRepository ShoppingCartRepository
+        {
+            get
+            {
+                if (shoppingCartRepository == null)
+                {
+                    shoppingCartRepository = new ShoppingCartRepository(DbContext);
+                }
+                return shoppingCartRepository;
+            }
+        }
 
     }
 }

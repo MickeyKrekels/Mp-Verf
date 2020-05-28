@@ -18,7 +18,7 @@
                 for (int i = 0; i < Model.Images.Count; i++)
                 {
                     <dd>
-                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Images[i])" width="200" height="200" />
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Images[i].Image)" width="200" height="200" />
                     </dd>
                 }
             }
@@ -48,6 +48,12 @@
             @Html.DisplayFor(model => model.Discription)
         </dd>
         <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.InStock)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InStock)
+        </dd>
         <br>
         <dt>
             @Html.DisplayNameFor(model => model.Price)
@@ -57,7 +63,7 @@
             @Html.DisplayFor(model => model.Price)
 
         </dd>
-        
+
         @if (Model.Discount > 0)
         {
             <dt>
@@ -76,14 +82,21 @@
 
         }
 
-
-        @if (User.IsInRole("Customer"))
+        @if (Model.InStock > 0)
         {
-            @Html.ActionLink("Add to Cart", "AddToShoppingCart", "Acount", new { id = Model.Id }, new { @class = "btn btn-info" })
+            if (User.IsInRole("Customer"))
+            {
+                @Html.ActionLink("Add to Cart", "AddToShoppingCart", "Acount", new { id = Model.Id }, new { @class = "btn btn-info" })
+            }
         }
-
+        else
+        {
+            <shadow>
+                <text style="color:red">Dit product is momenteel niet voorraad!</text>
+            </shadow>
+        }
     </dl>
-<p>
-    @Html.ActionLink("Back to List", "AllProducts")
-</p>
+    <p>
+        @Html.ActionLink("Back to List", "AllProducts")
+    </p>
 </div>

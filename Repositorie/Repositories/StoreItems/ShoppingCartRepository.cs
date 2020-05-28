@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositorie.Repositories.StoreItems
 {
-    public class ShoppingCartRepository
+    public class ShoppingCartRepository : IShoppingCartRepository
     {
         public MPVerfDB context;
 
@@ -37,7 +37,7 @@ namespace Repositorie.Repositories.StoreItems
         }
         public ShoppingCart Get(Guid id)
         {
-            var shoppingCart = context.ShoppingCart.Where(x=> x.Id == id).SingleOrDefault();
+            var shoppingCart = context.ShoppingCart.Where(x => x.Id == id).SingleOrDefault();
             return shoppingCart;
         }
 

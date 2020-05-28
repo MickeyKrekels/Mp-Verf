@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace Business_Logic.Processor
 {
@@ -40,7 +41,18 @@ namespace Business_Logic.Processor
             unitOfWork.StoreItemRepository.Remove(model.Id);
         }
 
-        public static void EditStoreItem(StoreItemModel model)
+        public static void UpdateStoreItemImages(StoreItemModel model)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            StoreItem storeItem = ConvertModelToStoreItem(model);
+
+            if (storeItem == null)
+                return;
+
+            unitOfWork.StoreItemRepository.UpdateStoreImages(storeItem);
+        }
+        public static void UpdateStoreItem(StoreItemModel model)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
@@ -51,48 +63,14 @@ namespace Business_Logic.Processor
 
             unitOfWork.StoreItemRepository.Update(storeItem);
         }
-
-
-        #endregion
-
-        #region CRUD Comments
-
-        public static void AddComment(Guid userId, Guid storeItemId, string text)
+        public static void UpdateStoreItem(StoreItem storeItem)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var storeItem = GetStoreItembyId(storeItemId);
-
-            UserComment comment = new UserComment
-            {
-                Id = Guid.NewGuid(),
-                OwnerId = userId,
-                Text = text,
-                ChildComments = new List<UserComment>(),       
-            };
-            storeItem.UserComments.Add(comment);
+            if (storeItem == null)
+                return;
 
             unitOfWork.StoreItemRepository.Update(storeItem);
-        }
-
-        public static void UpdateComment(Guid CommentId, Guid storeItemId, string newText)
-        {
-            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
-
-            var storeItem = GetStoreItembyId(storeItemId);
-
-            unitOfWork.UserCommentRepository.Update(CommentId, newText);
-        }
-
-        public static void RemoveComment(Guid CommentId)
-        {
-            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
-
-            unitOfWork.UserCommentRepository.Remove(CommentId);
-        }
-        public static void GetUserComments(Guid userId)
-        {
-
         }
 
         #endregion
@@ -154,8 +132,8 @@ namespace Business_Logic.Processor
                 {
                     StoreImage storeImage = new StoreImage
                     {
-                        Id = Guid.NewGuid(),
-                        ImageData = imageData
+                        Id = imageData.Id,
+                        ImageData = imageData.Image,
                     };
 
                     StoreImages.Add(storeImage);
@@ -186,11 +164,13 @@ namespace Business_Logic.Processor
                 DiscountPercentage = model.Discount,
                 Brand = model.Brand,
                 Images = StoreImages,
+                InStock = model.InStock,
                 Specification = Specifications
             };
 
             return storeItem;
         }
+    
 
         public static List<StoreItem> ConvertModelToStoreItem(List<StoreItemModel> models)
         {
@@ -237,7 +217,7 @@ namespace Business_Logic.Processor
             if (storeItem == null)
                 return null;
 
-            List<Byte[]> storeImages = new List<Byte[]>();
+            List<ImageModel> storeImages = new List<ImageModel>();
             List<SpecificationModel> specifications = new List<SpecificationModel>();
             List<CommentModel> comments = new List<CommentModel>();
 
@@ -245,7 +225,7 @@ namespace Business_Logic.Processor
             {
                 foreach (var image in storeItem.Images)
                 {
-                    var imageFileBase = image.ImageData;
+                    var imageFileBase = ConvertToImageModel(image);
 
                     if (imageFileBase == null)
                         continue;
@@ -281,6 +261,7 @@ namespace Business_Logic.Processor
                 Price = storeItem.Price,
                 Discount = storeItem.DiscountPercentage,
                 Images = storeImages,
+                InStock = storeItem.InStock,
                 Specifications = specifications,
                 Comments = comments,
             };
@@ -314,6 +295,17 @@ namespace Business_Logic.Processor
             return commentModel;
         }
 
+        private static ImageModel ConvertToImageModel(StoreImage storeImage)
+        {
+            ImageModel imageModel = new ImageModel
+            {
+                Id = storeImage.Id,
+                Image = storeImage.ImageData,
+            };
+
+            return imageModel;
+        }
+
         private static SpecificationModel ConvertToSpecificationModel(Specification specification)
         {
             SpecificationModel specificationModel = new SpecificationModel
@@ -323,6 +315,27 @@ namespace Business_Logic.Processor
             };
 
             return specificationModel;
+        }
+
+        public static List<ImageModel> ConvertToImageModel(List<byte[]> imageDatas)
+        {
+            List<ImageModel> models = new List<ImageModel>();
+
+            foreach (var imageData in imageDatas)
+            {
+               var model = ConvertToImageModel(imageData);
+                models.Add(model);
+            }
+            return models;
+        }
+        public static ImageModel ConvertToImageModel(byte[] imageData)
+        {
+            ImageModel imageModel = new ImageModel
+            {
+                Id = Guid.NewGuid(),
+                Image = imageData,
+            };
+            return imageModel;
         }
 
         public static byte[] ConverToBytes(HttpPostedFileBase file)

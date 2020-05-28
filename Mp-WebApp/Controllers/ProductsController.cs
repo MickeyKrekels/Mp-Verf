@@ -40,7 +40,9 @@ namespace Mp_WebApp.Controllers
             if (StoreImages != null)
             {
                 var imageData = StoreItemProcessor.ConverToBytes(StoreImages);
-                model.Images = imageData;
+                var imagemodels = StoreItemProcessor.ConvertToImageModel(imageData);
+
+                model.Images = imagemodels;
             }
             model.Id = Guid.NewGuid();
             StoreItemProcessor.CreateStoreItem(model);
@@ -61,12 +63,16 @@ namespace Mp_WebApp.Controllers
         [HttpPost]
         public ActionResult Edit(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
         {
-            if (StoreImages != null)
+            var checkModel = StoreItemProcessor.GetStoreItemModelbyId(model.Id);
+
+            if (StoreImages != null && StoreImages[0] != null)
             {
                 var imageData = StoreItemProcessor.ConverToBytes(StoreImages);
-                model.Images = imageData;
+                var imagemodels = StoreItemProcessor.ConvertToImageModel(imageData);
+
+                model.Images = imagemodels;
             }
-            StoreItemProcessor.EditStoreItem(model);
+            StoreItemProcessor.UpdateStoreItemImages(model);
             return RedirectToAction("AllProducts");
         }
 

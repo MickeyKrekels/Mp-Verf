@@ -23,10 +23,15 @@ namespace Business_Logic.Processor
             if (!(user is Customer))
                 return;
 
+
+
             var customer = (Customer)user;
 
             if (StoreItem == null)
                 return;
+
+            storeItemModel.InStock--;
+            StoreItemProcessor.UpdateStoreItem(storeItemModel);
 
             int amount = 0;
 
@@ -52,17 +57,38 @@ namespace Business_Logic.Processor
             }
 
         }
-        public static void RemoveFromShoppingCart(Guid id, StoreItemModel storeItemModel)
+        public static void RemoveFromShoppingCart(Guid id, ShoppingCartModel shoppingCartModel)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var StoreItem = StoreItemProcessor.ConvertModelToStoreItem(storeItemModel);
+            var StoreItem = StoreItemProcessor.GetStoreItembyId(shoppingCartModel.StoreItemId);
 
             if (StoreItem == null)
                 return;
 
+            StoreItem.InStock += shoppingCartModel.Amount;
+            StoreItemProcessor.UpdateStoreItem(StoreItem);
+
             unitOfWork.CustomerRepository.RemoveFromShoppingCart(id, StoreItem);
         }
+        public static ShoppingCartModel GetShoppingModel(Guid id)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+            var ShoppingCart = unitOfWork.ShoppingCartRepository.Get(id);
+
+            if (ShoppingCart == null)
+                return null;
+
+            var model = ConvertToShoppingCartModel(ShoppingCart);
+
+            if (model == null)
+                return null;
+
+            return model;
+        }
+
+
+        #region Convert functions
 
         public static ShoppingCart ConvertToShoppingCart(ShoppingCartModel shoppingCartModel)
         {
@@ -121,7 +147,7 @@ namespace Business_Logic.Processor
 
             ShoppingCartModel shoppingCartModel = new ShoppingCartModel
             {
-                Id = storeItem.Id,
+                Id = shoppingCart.Id,
                 Name = storeItem.Name,
                 Discription = storeItem.Discription,
                 Brand = storeItem.Brand,
@@ -133,6 +159,7 @@ namespace Business_Logic.Processor
 
                 Amount = shoppingCart.Amount,
                 DataCreated = shoppingCart.DataCreated,
+                StoreItemId = shoppingCart.StoreItemId,
             };
             return shoppingCartModel;
         }
@@ -149,6 +176,8 @@ namespace Business_Logic.Processor
             }
             return shoppingCartModels;
         }
+
+        #endregion
 
     }
 }

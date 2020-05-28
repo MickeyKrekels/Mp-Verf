@@ -15,6 +15,7 @@ namespace Repositorie.Entities.Base
         public string Brand { get; set; }
         public decimal Price { get; set; }
         public int DiscountPercentage { get; set; }
+        public int InStock { get; set; }
         public virtual List<Specification> Specification { get; set; }
         public virtual List<StoreImage> Images { get; set; }
         public virtual List<UserComment> UserComments { get; set; }

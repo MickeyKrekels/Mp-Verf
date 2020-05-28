@@ -11,6 +11,7 @@ namespace Repositorie.Repositories.StoreItems
         StoreItem Get(Guid id);
         StoreItem Get(Specification specification);
         void Remove(Guid id);
+        void UpdateStoreImages(StoreItem storeItem);
         void Update(StoreItem storeItem);
     }
 }
