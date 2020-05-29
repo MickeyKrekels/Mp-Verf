@@ -90,7 +90,7 @@ namespace Repositorie.Repositories.StoreItems
         {
             var storeItem = Get(id);
             var images = storeItem.Images;
-
+            var comments = storeItem.UserComments;
             //log error
             if (storeItem == null)
                 return;
@@ -100,6 +100,13 @@ namespace Repositorie.Repositories.StoreItems
                 for (int i = 0; i < images.Count; i++)
                 {
                     context.StoreImage.Remove(images[i]);
+                }
+            }
+            if (comments != null && comments.Count > 0)
+            {
+                for (int i = 0; i < comments.Count; i++)
+                {
+                    context.UserComment.Remove(comments[i]);
                 }
             }
 
