@@ -1,5 +1,6 @@
 ﻿using Repositorie.DbContexts;
 using Repositorie.Entities.Base;
+using Repositorie.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,17 @@ namespace Repositorie.Repositories.StoreItems
 
             result.Images = storeItem.Images;
             context.Entry(result).CurrentValues.SetValues(storeItem);
+            context.SaveChanges();
+        }
+        public void AddComments(Guid id,UserComment comment)
+        {
+            var result = context.StoreItem.Where(x => x.Id == id).First();
+
+            //log error
+            if (result == null)
+                return;
+
+            result.UserComments.Add(comment);
             context.SaveChanges();
         }
         public void Update(StoreItem storeItem)

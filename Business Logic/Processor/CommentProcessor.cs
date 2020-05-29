@@ -11,22 +11,20 @@ namespace Business_Logic.Processor
 {
     public static class CommentProcessor
     {
-        public static void AddComment(Guid userId, Guid StoreItemId, CommentModel commentModel)
+        public static void AddComment(Guid userId, Guid StoreItemId, string text , int productRating)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var storeItem = StoreItemProcessor.GetStoreItembyId(StoreItemId);
 
             UserComment comment = new UserComment
             {
                 Id = Guid.NewGuid(),
                 OwnerId = userId,
-                Text = commentModel.Text,
-                ProductRating = commentModel.ProductRating,
+                Text = text,
+                ProductRating = productRating,
             };
-            storeItem.UserComments.Add(comment);
 
-            unitOfWork.StoreItemRepository.UpdateStoreImages(storeItem);
+            unitOfWork.StoreItemRepository.AddComments(StoreItemId, comment);
         }
 
         public static void UpdateComment(Guid CommentId, string newText)

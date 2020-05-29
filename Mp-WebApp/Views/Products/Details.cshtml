@@ -99,4 +99,26 @@
     <p>
         @Html.ActionLink("Back to List", "AllProducts")
     </p>
+    <hr />
+
+    <h2>Product Reviews</h2>
+
+    @using (Html.BeginForm("PostComment", "Products", FormMethod.Post))
+    {
+        <input class="pull-left" type="text" name="text"
+               style="width:700px; height: 60px; font-size: 20px; margin-top:10px;" />
+        <br /> <br /> <br /> <br />
+        <input type="hidden" name="storeItemId" value="@Model.Id" />
+        <input type="submit" value="Post Review"
+               class="btn btn-success pull-left" style="margin-bottom:10px;" />
+    }
+    <br /> <br /> 
+    @foreach (var comment in Model.Comments.OrderByDescending(x => x.DataCreated))
+    {
+        <div>
+            <br>
+            <text>- @comment.Text | @comment.DataCreated</text>
+        </div>
+    }
+    <br />
 </div>

@@ -11,7 +11,6 @@ using System.Linq;
 
 namespace Mp_WebApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         [AllowAnonymous]
@@ -25,13 +24,14 @@ namespace Mp_WebApp.Controllers
                 .ToList()
                 .ToPagedList(i ?? 1, 5));
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult AddProduct()
         {
             return View();
         }
           
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddProduct(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
         {
             if (model == null || !ModelState.IsValid)
@@ -49,7 +49,7 @@ namespace Mp_WebApp.Controllers
 
             return RedirectToAction("AllProducts");
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(Guid id)
         {
             var model = StoreItemProcessor.GetStoreItemModelbyId(id);
@@ -61,6 +61,7 @@ namespace Mp_WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
         {
             var checkModel = StoreItemProcessor.GetStoreItemModelbyId(model.Id);
@@ -76,7 +77,7 @@ namespace Mp_WebApp.Controllers
             return RedirectToAction("AllProducts");
         }
 
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(Guid id)
         {
             var model = StoreItemProcessor.GetStoreItemModelbyId(id);
@@ -88,6 +89,7 @@ namespace Mp_WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(StoreItemModel model)
         {
             StoreItemProcessor.RemoveStoreItem(model);
@@ -103,6 +105,33 @@ namespace Mp_WebApp.Controllers
                 return View();
 
             return View(model);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Customer")]
+        public ActionResult PostComment(Guid storeItemId, string text , int rating = 5)
+        {
+            if (text == null || text == "")
+                return RedirectToAction("Details", new { id = storeItemId});
+
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity);
+
+            CommentProcessor.AddComment(userId, storeItemId, text, rating);
+
+            return RedirectToAction("Details", new { id = storeItemId });
+        }
+        [Authorize(Roles = "Customer")]
+        public ActionResult RemoveComment(CommentModel model)
+        {
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity); 
+
+            if (model == null || userId != model.OwnerId)
+                return RedirectToAction("Details");
+
+            CommentProcessor.RemoveComment(model.Id);
+
+            return RedirectToAction("Details");
         }
     }
 }
