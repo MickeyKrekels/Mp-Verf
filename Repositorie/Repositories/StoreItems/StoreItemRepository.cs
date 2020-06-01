@@ -35,7 +35,10 @@ namespace Repositorie.Repositories.StoreItems
         }
         public StoreItem Get(Guid id)
         {
-            var StoreItems = context.StoreItem.Where(x => x.Id == id).First();
+            var StoreItems = context.StoreItem.Where(x => x.Id == id).FirstOrDefault();
+
+            if (StoreItems == null)
+                return null;
 
             return StoreItems;
         }
