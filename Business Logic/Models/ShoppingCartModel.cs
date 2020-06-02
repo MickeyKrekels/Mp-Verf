@@ -13,8 +13,8 @@ namespace Business_Logic.Models
         [Range(1, 100, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int Amount { get; set; }
         public DateTime DataCreated { get; set; }
-
         public Guid StoreItemId { get; set; }
+
 
         public decimal PriceTimesAmount
         {

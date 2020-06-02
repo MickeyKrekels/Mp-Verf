@@ -8,6 +8,7 @@ using System;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Mp_WebApp.Controllers
 {
@@ -75,10 +76,9 @@ namespace Mp_WebApp.Controllers
         [Authorize(Roles = "Customer")]
         public ActionResult ShoppingCart()
         {
-            string identity = User.Identity.Name;
-            Guid id = Guid.Parse(identity);
+            Guid userId = GetUserId();
 
-            var userModel = UserProcessor.ConvertUserToModel(id);
+            var userModel = UserProcessor.GetUserToModel(userId);
 
             if (userModel == null)
                 return View();
@@ -89,8 +89,7 @@ namespace Mp_WebApp.Controllers
         [Authorize(Roles = "Customer")]
         public ActionResult AddToShoppingCart(Guid id)
         {
-            string identity = User.Identity.Name;
-            Guid userId = Guid.Parse(identity);
+            Guid userId = GetUserId();
 
             var storeItem = StoreItemProcessor.GetStoreItemModelbyId(id);
             ShoppingCartProcessor.AddToShoppingCart(userId, storeItem);
@@ -101,8 +100,7 @@ namespace Mp_WebApp.Controllers
         [Authorize(Roles = "Customer")]
         public ActionResult RemoveFromShoppingCart(Guid id)
         {
-            string identity = User.Identity.Name;
-            Guid userId = Guid.Parse(identity);
+            Guid userId = GetUserId();
 
             var shoppingModel = ShoppingCartProcessor.GetShoppingModel(id);
             ShoppingCartProcessor.RemoveFromShoppingCart(userId, shoppingModel);
@@ -110,12 +108,47 @@ namespace Mp_WebApp.Controllers
             return RedirectToAction("ShoppingCart", "Acount");
         }
 
+        public ActionResult EditShoppingCart(Guid id)
+        {
+            Guid userId = GetUserId();
+            var model = ShoppingCartProcessor.GetShoppingModel(id);
+            var userModel = UserProcessor.GetUserToModel(userId);
+
+            var checkUserOwnesItem = userModel.ShoppingCart.Where(x => x.Id == id).SingleOrDefault();
+
+            if (model == null || checkUserOwnesItem == null)
+            {
+                return RedirectToAction("ShoppingCart", "Acount");
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditShoppingCart(ShoppingCartModel model)
+        {
+            Guid userId = GetUserId();
+            var user = UserProcessor.GetUserToModel(userId);
+            var userModel = UserProcessor.GetUserToModel(userId);
+
+            var checkUserOwnesItem = userModel.ShoppingCart.Where(x => x.Id == model.Id).SingleOrDefault();
+            var storeItem = StoreItemProcessor.GetStoreItemModelbyId(checkUserOwnesItem.StoreItemId);
+
+            var StockAmountIsGreater = storeItem.InStock >= model.Amount;
+
+            if (model == null || checkUserOwnesItem == null || !StockAmountIsGreater)
+            {
+                return RedirectToAction("EditShoppingCart", "Acount");
+            }
+            ShoppingCartProcessor.UpdateShoppingCart(checkUserOwnesItem,model);
+            return RedirectToAction("ShoppingCart", "Acount");
+        }
         public ActionResult SendPaymentEmail()
         {
             string identity = User.Identity.Name;
             Guid userId = Guid.Parse(identity);
 
-            var userModel = UserProcessor.ConvertUserToModel(userId);
+            var userModel = UserProcessor.GetUserToModel(userId);
 
             if (!SendEmail(userId, "MP-Verf Order confirmation email", "test"))
             {
@@ -131,11 +164,18 @@ namespace Mp_WebApp.Controllers
 
             return RedirectToAction("ShoppingCart", "Acount");
         }
+
+        private Guid GetUserId()
+        {
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity);
+            return userId;
+        }
         public bool SendEmail(Guid userId ,string subject,string emailBody)
         {
             try
             {
-                var userModel = UserProcessor.ConvertUserToModel(userId);
+                var userModel = UserProcessor.GetUserToModel(userId);
 
                 string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
                 string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();

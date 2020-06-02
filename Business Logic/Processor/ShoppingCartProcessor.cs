@@ -23,15 +23,12 @@ namespace Business_Logic.Processor
             if (!(user is Customer))
                 return;
 
-
-
             var customer = (Customer)user;
 
             if (StoreItem == null)
                 return;
 
-            storeItemModel.InStock--;
-            StoreItemProcessor.UpdateStoreItem(storeItemModel);
+            ChangeStoreItemStock(StoreItem, -1);
 
             int amount = 0;
 
@@ -44,7 +41,7 @@ namespace Business_Logic.Processor
             }
             if (amount == 0)
             {
-                var shoppingCart = ConvertToShoppingCart(StoreItem);
+                var shoppingCart = ConvertStoreItemToShoppingCart(StoreItem);
                 unitOfWork.CustomerRepository.AddToShoppingCart(id, shoppingCart);
             }
             else // there are multible items equal to storeItemModel 
@@ -52,24 +49,24 @@ namespace Business_Logic.Processor
                 //update storeItem amount
                 var currenthoppingCart = customer.ShoppingCart.Where(x => x.StoreItemId == storeItemModel.Id).FirstOrDefault();
                 int newAmount = currenthoppingCart.Amount + 1;
-                
+
                 unitOfWork.CustomerRepository.UpdateShoppingCart(id, currenthoppingCart.Id, newAmount);
             }
 
         }
+
         public static void RemoveFromShoppingCart(Guid id, ShoppingCartModel shoppingCartModel)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var StoreItem = StoreItemProcessor.GetStoreItembyId(shoppingCartModel.StoreItemId);
+            var storeItem = StoreItemProcessor.GetStoreItembyId(shoppingCartModel.StoreItemId);
 
-            if (StoreItem == null)
+            if (storeItem == null)
                 return;
 
-            StoreItem.InStock += shoppingCartModel.Amount;
-            StoreItemProcessor.UpdateStoreItem(StoreItem);
+            ChangeStoreItemStock(storeItem, shoppingCartModel.Amount);
 
-            unitOfWork.CustomerRepository.RemoveFromShoppingCart(id, StoreItem);
+            unitOfWork.CustomerRepository.RemoveFromShoppingCart(id, storeItem);
         }
         public static ShoppingCartModel GetShoppingModel(Guid id)
         {
@@ -86,15 +83,34 @@ namespace Business_Logic.Processor
 
             return model;
         }
+        public static void UpdateShoppingCart(ShoppingCartModel oldModel, ShoppingCartModel newModel)
+        {
+            var shoppingCart = ConvertToShoppingCart(newModel);
 
+            if (shoppingCart == null)
+                return;
+
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            unitOfWork.ShoppingCartRepository.Update(shoppingCart);
+
+            var storeItem = StoreItemProcessor.GetStoreItembyId(oldModel.StoreItemId);
+
+            int newAmount = oldModel.Amount - newModel.Amount;
+            ChangeStoreItemStock(storeItem, newAmount);
+        }
+        public static void ChangeStoreItemStock(StoreItem storeItem, int amount)
+        {
+            storeItem.InStock+= amount;
+            StoreItemProcessor.UpdateStoreItem(storeItem);
+        }
 
         #region Convert functions
-
         public static ShoppingCart ConvertToShoppingCart(ShoppingCartModel shoppingCartModel)
         {
             ShoppingCart shoppingCart = new ShoppingCart
             {
-                Id = Guid.NewGuid(),
+                Id = shoppingCartModel.Id,
                 Amount = shoppingCartModel.Amount,
                 StoreItemId = shoppingCartModel.Id,
             };
@@ -107,14 +123,14 @@ namespace Business_Logic.Processor
                 return null;
 
             List<ShoppingCart> ShoppingCarts = new List<ShoppingCart>();
-            foreach (var storeItem in shoppingCartModel)
+            foreach (var model in shoppingCartModel)
             {
-                var shoppingCart = ConvertToShoppingCart(storeItem);
+                var shoppingCart = ConvertToShoppingCart(model);
                 ShoppingCarts.Add(shoppingCart);
             }
             return ShoppingCarts;
         }
-        public static ShoppingCart ConvertToShoppingCart(StoreItem storeItem,int amount = 1)
+        public static ShoppingCart ConvertStoreItemToShoppingCart(StoreItem storeItem,int amount = 1)
         {
             ShoppingCart shoppingCart = new ShoppingCart
             {
@@ -125,7 +141,7 @@ namespace Business_Logic.Processor
 
             return shoppingCart;
         }
-        public static List<ShoppingCart> ConvertToShoppingCart(List<StoreItem> StoreItems)
+        public static List<ShoppingCart> ConvertStoreItemToShoppingCart(List<StoreItem> StoreItems)
         {
             if (StoreItems == null)
                 return null;
@@ -133,7 +149,7 @@ namespace Business_Logic.Processor
             List<ShoppingCart> ShoppingCarts = new List<ShoppingCart>();
             foreach (var storeItem in StoreItems)
             {
-                var shoppingCart = ConvertToShoppingCart(storeItem);
+                var shoppingCart = ConvertStoreItemToShoppingCart(storeItem);
                 ShoppingCarts.Add(shoppingCart);
             }
             return ShoppingCarts;

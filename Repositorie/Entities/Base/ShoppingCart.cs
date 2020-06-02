@@ -12,11 +12,9 @@ namespace Repositorie.Entities.Base
     public class ShoppingCart : EntityModalBase
     {
         public Guid StoreItemId { get; set; }
-
         public Guid Customer_Id { get; set; }
         public int Amount { get; set; }
         public DateTime DataCreated { get; set; }
-
         public ShoppingCart()
         {
             DataCreated = DateTime.Now;

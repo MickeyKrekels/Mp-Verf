@@ -8,6 +8,7 @@ namespace Repositorie.Repositories.StoreItems
     {
         void Add(List<ShoppingCart> shoppingCarts);
         void Add(ShoppingCart shoppingCart);
+        void Update(ShoppingCart shoppingCart);
         List<ShoppingCart> Get();
         ShoppingCart Get(Guid id);
         List<ShoppingCart> GetByUser(Guid userId);

@@ -30,6 +30,16 @@ namespace Repositorie.Repositories.StoreItems
             }
             context.SaveChanges();
         }
+        public void Update(ShoppingCart shoppingCart)
+        {
+            var result = context.ShoppingCart.Where(x=> x.Id == shoppingCart.Id).FirstOrDefault();
+
+            if (result == null)
+                return;
+            //only the amount can be changed for now
+            result.Amount = shoppingCart.Amount;
+            context.SaveChanges();
+        }
         public List<ShoppingCart> Get()
         {
             var shoppingCarts = context.ShoppingCart.ToList();

@@ -78,7 +78,7 @@ namespace Repositorie.Repositories.StoreItems
         }
         public void Update(StoreItem storeItem)
         {
-            var result = context.StoreItem.Where(x => x.Id == storeItem.Id).First();
+            var result = context.StoreItem.Where(x => x.Id == storeItem.Id).FirstOrDefault();
 
             //log error
             if (result == null)

@@ -111,7 +111,7 @@ namespace Business_Logic.Processor
 
         }
 
-        public static UserModel ConvertUserToModel(Guid id)
+        public static UserModel GetUserToModel(Guid id)
         {
             var user = GetUser(id);
             var model = ConvertToModel(user);
