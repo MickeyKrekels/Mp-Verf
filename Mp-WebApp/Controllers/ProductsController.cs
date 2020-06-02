@@ -14,15 +14,26 @@ namespace Mp_WebApp.Controllers
     public class ProductsController : Controller
     {
         [AllowAnonymous]
-        public ActionResult AllProducts(string search,int? i)
+        public ActionResult AllProducts(string search,string sortBy,int? i)
         {
-            var StoreItems = StoreItemProcessor.ConvertAllStoreItemToModels();
+            var StoreItems = StoreItemProcessor.ConvertAllStoreItemToModels()
+                .Where(x => search == null || x.Name.ToLower()
+                .StartsWith(search.ToLower()))
+                .ToList();
 
+            if(sortBy != "Sort By")
+            {
+                if(sortBy == "Price up")
+                {
+                    StoreItems = StoreItems.OrderByDescending(x => x.PriceWithDiscount).ToList();
+                }
+                if(sortBy == "Price down")
+                {
+                    StoreItems = StoreItems.OrderBy(x => x.PriceWithDiscount).ToList();
+                }
+            }
 
-            return View(StoreItems
-                .Where(x => search == null || x.Name.ToLower().StartsWith(search.ToLower()))
-                .ToList()
-                .ToPagedList(i ?? 1, 5));
+            return View(StoreItems.ToPagedList(i ?? 1, 5));
         }
         [Authorize(Roles = "Admin")]
         public ActionResult AddProduct()

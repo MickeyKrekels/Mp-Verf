@@ -17,8 +17,25 @@
     }
     @using (Html.BeginForm("AllProducts", "Products", FormMethod.Get))
     {
-    <input type="text" name="search" placeholder="Enter product name" />
-    <input type="submit" name="submit" value="Search" />
+        <style type="text/css">
+            #platformRating select,
+            #platformRating p {
+                display: inline;
+                vertical-align: top;
+                line-height: 28px;
+            }
+        </style>
+        <div id="platformRating">
+            <input type="text" name="search" placeholder="Enter product name" style="height: 35px;" />
+
+            <select class="form-control" id="SortById" name="SortBy" style="height: 35px; width:130px;">
+                <option style="height: 20px;">Sort By</option>
+                <option style="height: 20px;">Price up</option>
+                <option style="height: 20px;">Price down</option>
+            </select>
+
+            <input type="submit" name="submit" value="Search" style="height: 35px;" />
+        </div>
     }
 </p>
 <table class="table">
@@ -77,9 +94,9 @@
 
                     @if (User.IsInRole("Admin"))
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         <br>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                     }
                 </td>
             </tr>
@@ -87,5 +104,4 @@
     }
 
 </table>
-
-@Html.PagedListPager(Model, i => Url.Action("AllProducts", "Products", new { i, search= Request.QueryString["Search"] }))
+@Html.PagedListPager(Model, i => Url.Action("AllProducts", "Products", new { i, search = Request.QueryString["Search"], sortBy = Request.QueryString["SortBy"] }))

@@ -135,7 +135,6 @@ namespace Mp_WebApp.Controllers
         {
             try
             {
-
                 var userModel = UserProcessor.ConvertUserToModel(userId);
 
                 string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
