@@ -23,8 +23,7 @@ namespace Mp_WebApp
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-lumen.css",
-                      "~/Content/site.css"));
+                "~/Content/bootstrap-lumen.css"));
         }
     }
 }
