@@ -9,7 +9,10 @@ namespace Mp_WebApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+
+            var models = StoreItemProcessor.ConvertAllStoreItemToModels();
+
+            return View(models);
         }
 
         public ActionResult About()

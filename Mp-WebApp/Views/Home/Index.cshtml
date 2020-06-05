@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Business_Logic.Models.StoreItemModel>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -6,4 +8,39 @@
     <h1>MP-Verf</h1>
     <p class="lead">Voor al uw verf en klus artikelen</p>
     <p><a href="http://www.mp-krekels.nl/" class="btn btn-primary btn-lg">Visit the old website &raquo;</a></p>
+</div>
+<hr />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet"  />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dataTable").dataTable();
+    });
+</script>
+<style>
+    .carousel-inner img {
+        width: 150px;
+        height: 150px;
+    }
+</style>
+<div class="container py-4">
+    <h3 class="text-center text-uppercase">On Sale Now!</h3>
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                var active = i == 1 ? "active" : "";
+                <div class="carousel-item @active">
+                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Images[0].Image)" alt="" />
+                    <text>@item.Name Now @item.PriceWithDiscount!</text>
+                </div>
+            }
+        </div>
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+        </a>
+    </div>
 </div>
