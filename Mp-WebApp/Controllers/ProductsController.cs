@@ -31,6 +31,14 @@ namespace Mp_WebApp.Controllers
                 {
                     StoreItems = StoreItems.OrderBy(x => x.PriceWithDiscount).ToList();
                 }
+                if (sortBy == "In Stock up")
+                {
+                    StoreItems = StoreItems.OrderByDescending(x => x.InStock).ToList();
+                }
+                if (sortBy == "In Stock down")
+                {
+                    StoreItems = StoreItems.OrderBy(x => x.InStock).ToList();
+                }
             }
 
             return View(StoreItems.ToPagedList(i ?? 1, 5));
