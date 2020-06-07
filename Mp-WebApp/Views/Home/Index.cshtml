@@ -10,7 +10,6 @@
     <p><a href="http://www.mp-krekels.nl/" class="btn btn-primary btn-lg">Visit the old website &raquo;</a></p>
 </div>
 <hr />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet"  />
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -22,6 +21,50 @@
         width: 150px;
         height: 150px;
     }
+    .carousel {
+        position: relative
+    }
+    .carousel-item {
+        position: relative;
+        display: none;
+        float: left;
+        width: 100%;
+        margin-right: -100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transition: -webkit-transform .6s ease-in-out;
+        transition: transform .6s ease-in-out;
+        transition: transform .6s ease-in-out,-webkit-transform .6s ease-in-out
+    }
+    .carousel-control-next, .carousel-control-prev {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 15%;
+        color: #fff;
+        text-align: center;
+        opacity: .5;
+        transition: opacity .15s ease
+    }
+    .carousel-control-prev {
+        left: 0
+    }
+
+    .carousel-control-next {
+        right: 0
+    }
+    .carousel-inner {
+        position: relative;
+        width: 100%;
+        overflow: hidden
+    }
 </style>
 <div class="container py-4">
     <h3 class="text-center text-uppercase">On Sale Now!</h3>
@@ -32,10 +75,14 @@
             {
                 i++;
                 var active = i == 1 ? "active" : "";
-                <div class="carousel-item @active">
-                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Images[0].Image)" alt="" />
-                    <text>@item.Name Now @item.PriceWithDiscount!</text>
-                </div>
+            <div class="carousel-item @active">
+                <img src="data:image;base64,@System.Convert.ToBase64String(item.Images[0].Image)" alt="" />
+
+                @{ 
+                 string text = $"{item.Name} Now {item.PriceWithDiscount}!";
+                }
+                @Html.ActionLink(text, "Details", "Products", new { id = item.Id }, null)
+            </div>
             }
         </div>
         <a class="carousel-control-prev" href="#demo" data-slide="prev">
