@@ -41,7 +41,7 @@ namespace Mp_WebApp.Controllers
                 }
             }
 
-            return View(StoreItems.ToPagedList(i ?? 1, 5));
+            return View(StoreItems.ToPagedList(i ?? 1, 8));
         }
         [Authorize(Roles = "Admin")]
         public ActionResult AddProduct()

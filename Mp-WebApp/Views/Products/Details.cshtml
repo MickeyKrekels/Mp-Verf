@@ -113,20 +113,41 @@
                class="btn btn-success pull-left" style="margin-bottom:10px;" />
     }
     <br /> <br />
+
+
+
+    <style>
+        .chatbox {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+        }
+        .dropbox {
+            position: absolute;
+            left: 75%;       
+        }
+
+    </style>
     @foreach (var comment in Model.Comments.OrderByDescending(x => x.DataCreated))
     {
-        <div style="
-    border: 2px solid #dedede;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;">
+        <div class="chatbox">
+            <div class="dropbox">
+                <select class="form-control" id="Rating" name="SortBy" style="height: 30px; width:80px; font-weight: bold;">
+                    <option style="height: 20px;">1</option>
+                    <option style="height: 20px;">2</option>
+                    <option style="height: 20px;">3</option>
+                    <option style="height: 20px;">4</option>
+                    <option style="height: 20px;">5</option>
+                </select>
+            </div>
             <div>
                 <p>@comment.Text</p>
-                <span style="float: left; color: #999;">@comment.DataCreated</span>
+                <span style="float: right; color: #999;">@comment.DataCreated</span>
             </div>
-        </div>
 
+        </div>
 
     }
     <br />
