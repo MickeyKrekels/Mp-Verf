@@ -247,7 +247,7 @@ namespace Business_Logic.Processor
             {
                 foreach (var userComment in storeItem.UserComments)
                 {
-                    CommentModel commentModel = ConvertToCommentModel(userComment);
+                    CommentModel commentModel = CommentProcessor.ConvertToCommentModel(userComment);
                     comments.Add(commentModel);
                 }
             }
@@ -280,20 +280,7 @@ namespace Business_Logic.Processor
             }
 
             return models;
-        }
-        private static CommentModel ConvertToCommentModel(UserComment userComment)
-        {
-
-            CommentModel commentModel = new CommentModel
-            {
-                Id = userComment.Id,
-                Text = userComment.Text,
-                DataCreated = userComment.DataCreated,
-                //ChildComments = userComment.ChildComments,
-                OwnerId = userComment.OwnerId,
-            };
-            return commentModel;
-        }
+        }     
 
         private static ImageModel ConvertToImageModel(StoreImage storeImage)
         {

@@ -71,29 +71,9 @@
     <Compile Include="Entities\Users\Admin.cs" />
     <Compile Include="Entities\Users\Customer.cs" />
     <Compile Include="Entities\Users\UserComment.cs" />
-    <Compile Include="Migrations\202005222246520_Test.cs" />
-    <Compile Include="Migrations\202005222246520_Test.designer.cs">
-      <DependentUpon>202005222246520_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005261408580_AddedDiscountPercentage.cs" />
-    <Compile Include="Migrations\202005261408580_AddedDiscountPercentage.designer.cs">
-      <DependentUpon>202005261408580_AddedDiscountPercentage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005271112473_CommentUpdate.cs" />
-    <Compile Include="Migrations\202005271112473_CommentUpdate.designer.cs">
-      <DependentUpon>202005271112473_CommentUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005271334550_StoreItemUpdate.cs" />
-    <Compile Include="Migrations\202005271334550_StoreItemUpdate.designer.cs">
-      <DependentUpon>202005271334550_StoreItemUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005271730463_InstockUpdate.cs" />
-    <Compile Include="Migrations\202005271730463_InstockUpdate.designer.cs">
-      <DependentUpon>202005271730463_InstockUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005282110275_CommentScoreUpdate.cs" />
-    <Compile Include="Migrations\202005282110275_CommentScoreUpdate.designer.cs">
-      <DependentUpon>202005282110275_CommentScoreUpdate.cs</DependentUpon>
+    <Compile Include="Migrations\202006102109579_TimesVotedAdded.cs" />
+    <Compile Include="Migrations\202006102109579_TimesVotedAdded.designer.cs">
+      <DependentUpon>202006102109579_TimesVotedAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,23 +112,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005222246520_Test.resx">
-      <DependentUpon>202005222246520_Test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005261408580_AddedDiscountPercentage.resx">
-      <DependentUpon>202005261408580_AddedDiscountPercentage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005271112473_CommentUpdate.resx">
-      <DependentUpon>202005271112473_CommentUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005271334550_StoreItemUpdate.resx">
-      <DependentUpon>202005271334550_StoreItemUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005271730463_InstockUpdate.resx">
-      <DependentUpon>202005271730463_InstockUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005282110275_CommentScoreUpdate.resx">
-      <DependentUpon>202005282110275_CommentScoreUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006102109579_TimesVotedAdded.resx">
+      <DependentUpon>202006102109579_TimesVotedAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

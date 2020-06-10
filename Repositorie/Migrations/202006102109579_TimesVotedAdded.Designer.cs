@@ -7,13 +7,13 @@ namespace Repositorie.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class CommentScoreUpdate : IMigrationMetadata
+    public sealed partial class TimesVotedAdded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CommentScoreUpdate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TimesVotedAdded));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005282110275_CommentScoreUpdate"; }
+            get { return "202006102109579_TimesVotedAdded"; }
         }
         
         string IMigrationMetadata.Source

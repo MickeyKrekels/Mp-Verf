@@ -14,20 +14,20 @@ namespace Mp_WebApp.Controllers
     public class ProductsController : Controller
     {
         [AllowAnonymous]
-        public ActionResult AllProducts(string search,string sortBy,int? i)
+        public ActionResult AllProducts(string search, string sortBy, int? i)
         {
             var StoreItems = StoreItemProcessor.ConvertAllStoreItemToModels()
                 .Where(x => search == null || x.Name.ToLower()
                 .StartsWith(search.ToLower()))
                 .ToList();
 
-            if(sortBy != "Sort By")
+            if (sortBy != "Sort By")
             {
-                if(sortBy == "Price up")
+                if (sortBy == "Price up")
                 {
                     StoreItems = StoreItems.OrderByDescending(x => x.PriceWithDiscount).ToList();
                 }
-                if(sortBy == "Price down")
+                if (sortBy == "Price down")
                 {
                     StoreItems = StoreItems.OrderBy(x => x.PriceWithDiscount).ToList();
                 }
@@ -48,7 +48,7 @@ namespace Mp_WebApp.Controllers
         {
             return View();
         }
-          
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult AddProduct(StoreItemModel model, List<HttpPostedFileBase> StoreImages)
@@ -127,10 +127,10 @@ namespace Mp_WebApp.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Customer")]
-        public ActionResult PostComment(Guid storeItemId, string text , int rating = 5)
+        public ActionResult PostComment(Guid storeItemId, string text, int rating = 0)
         {
             if (text == null || text == "")
-                return RedirectToAction("Details", new { id = storeItemId});
+                return RedirectToAction("Details", new { id = storeItemId });
 
             string identity = User.Identity.Name;
             Guid userId = Guid.Parse(identity);
@@ -139,6 +139,23 @@ namespace Mp_WebApp.Controllers
 
             return RedirectToAction("Details", new { id = storeItemId });
         }
+        [HttpPost]
+        [Authorize(Roles = "Customer")]
+        public ActionResult UpdateCommentRating(Guid storeItemId, Guid commentId, int rating = 0)
+        {
+            var model = CommentProcessor.GetUserComment(commentId);
+
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity);
+
+            if (model == null||userId != model.OwnerId || rating == 0)
+                return RedirectToAction("Details", new { id = storeItemId });
+
+            CommentProcessor.UpdateRating(commentId, rating);
+
+            return RedirectToAction("Details", new { id = storeItemId});
+        }
+
         [Authorize(Roles = "Customer")]
         public ActionResult RemoveComment(CommentModel model)
         {

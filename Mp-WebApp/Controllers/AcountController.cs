@@ -145,8 +145,7 @@ namespace Mp_WebApp.Controllers
         }
         public ActionResult SendPaymentEmail()
         {
-            string identity = User.Identity.Name;
-            Guid userId = Guid.Parse(identity);
+            var userId = GetUserId();
 
             var userModel = UserProcessor.GetUserToModel(userId);
 

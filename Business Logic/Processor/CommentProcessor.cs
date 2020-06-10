@@ -27,11 +27,18 @@ namespace Business_Logic.Processor
             unitOfWork.StoreItemRepository.AddComments(StoreItemId, comment);
         }
 
-        public static void UpdateComment(Guid CommentId, string newText)
+        public static void UpdateCommentText(Guid CommentId, string newText)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
             unitOfWork.UserCommentRepository.Update(CommentId, newText);
+        }
+
+        public static void UpdateRating(Guid CommentId, int rating)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            unitOfWork.UserCommentRepository.UpdateRating(CommentId, rating);
         }
 
         public static void RemoveComment(Guid CommentId)
@@ -40,9 +47,32 @@ namespace Business_Logic.Processor
 
             unitOfWork.UserCommentRepository.Remove(CommentId);
         }
-        public static void GetUserComments(Guid userId)
+
+        public static CommentModel ConvertToCommentModel(UserComment userComment)
         {
 
+            CommentModel commentModel = new CommentModel
+            {
+                Id = userComment.Id,
+                Text = userComment.Text,
+                DataCreated = userComment.DataCreated,
+                TimesVoted = userComment.TimesVoted,
+                OwnerId = userComment.OwnerId,
+            };
+            return commentModel;
+        }
+
+        public static CommentModel GetUserComment(Guid userId)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+            var comment = unitOfWork.UserCommentRepository.Get(userId);
+
+            if (comment == null)
+                return null;
+
+            var model = ConvertToCommentModel(comment);
+
+            return model;
         }
 
     }
