@@ -103,7 +103,7 @@
 
     <h2>Product Reviews</h2>
 
-    @using (Html.BeginForm("PostComment", "Products", FormMethod.Post))
+    @using (Html.BeginForm("PostComment", "Comment", FormMethod.Post))
     {
         <input class="pull-left" type="text" name="text"
                style="width:700px; height: 60px; font-size: 20px; margin-top:10px;" />
@@ -122,27 +122,35 @@
             padding: 20px;
             margin: 10px;
         }
-        .dropbox {
-            position: absolute;
-            left: 75%;       
-        }
-    </style>
 
+    </style>
+    @{
+        string identity = User.Identity.Name;
+        Guid userId = Guid.Parse(identity);
+    }
     @foreach (var comment in Model.Comments.OrderByDescending(x => x.DataCreated))
     {
         <div class="chatbox">
-            <div class="dropbox">
-                <select class="form-control" id="Rating" name="SortBy" style="height: 30px; width:80px; font-weight: bold;">
-                    <option style="height: 20px;">1</option>
-                    <option style="height: 20px;">2</option>
-                    <option style="height: 20px;">3</option>
-                    <option style="height: 20px;">4</option>
-                    <option style="height: 20px;">5</option>
-                </select>
+            @if (userId != comment.OwnerId)
+            {
+            <div style="float: right;">
+
+                @Html.ActionLink("Post Rating", "UpdateCommentRating", "Comment", new { storeItemId = Model.Id, commentId = comment.Id}, new { @class = "btn" })
             </div>
+                <div style="float: right;">
+                    <select class="form-control" name="Rating" style="height: 30px; width:80px;">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+
+            }
             <div>
                 <p>@comment.Text</p>
-                <span style="float: right; color: #999;">@comment.DataCreated</span>
+                <span style="float: right; color: #999;margin:5px;">@comment.DataCreated</span>
             </div>
 
         </div>
