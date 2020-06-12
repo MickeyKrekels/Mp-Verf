@@ -136,27 +136,23 @@
     @foreach (var comment in Model.Comments.OrderByDescending(x => x.DataCreated))
     {
         <div class="chatbox">
-            @if (userId != comment.OwnerId)
-            {
             <div style="float: right;">
-
-                @Html.ActionLink("Post Rating", "UpdateCommentRating", "Comment", new { storeItemId = Model.Id, commentId = comment.Id}, new { @class = "btn" })
+                @if (userId != comment.OwnerId)
+                {
+                    @Html.ActionLink("Post Rating", "CommentRating", "Comment", new { storeItemId = Model.Id, commentId = comment.Id }, new { @class = "btn btn-info" })
+                }
+                else
+                {
+                    @Html.ActionLink("Change your comment", "Edit Comment", "Comment", new { storeItemId = Model.Id, commentId = comment.Id }, new { @class = "btn btn-success" })
+                }
+                <br>
             </div>
-                <div style="float: right;">
-                    <select class="form-control" name="Rating" style="height: 30px; width:80px;">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-
-            }
+            
             <div>
                 <p>@comment.Text</p>
-                <span style="float: right; color: #999;margin:5px;">@comment.DataCreated</span>
+                <span style="color: #999;">@comment.DataCreated</span>
             </div>
+
 
         </div>
 

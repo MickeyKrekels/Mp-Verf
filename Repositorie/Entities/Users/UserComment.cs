@@ -13,7 +13,6 @@ namespace Repositorie.Entities.Users
         public string Text { get; set; }
         public DateTime DataCreated { get; set; }
         public Guid OwnerId { get; set; }
-        public int TimesVoted { get; set; }
 
         [ForeignKey("CommentId")]
         public virtual List<CommentRating> CommentRatings { get; set; }

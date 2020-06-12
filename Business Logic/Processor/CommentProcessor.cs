@@ -25,22 +25,16 @@ namespace Business_Logic.Processor
             unitOfWork.StoreItemRepository.AddComments(StoreItemId, comment);
         }
 
-        public static void AddCommentRating(Guid userId, Guid CommentId, int productRating)
+        public static void AddCommentRating(CommentRatingModel model)
         {
+            var commentRating = ConvertToCommentRating(model);
+
+            if (commentRating == null)
+                return;
+            
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            var comment = unitOfWork.CommentRatingRepository.Get(CommentId);
-
-            if (comment == null)
-                return;
-
-            CommentRating commentRating = new CommentRating
-            {
-                Id = Guid.NewGuid(),
-                OwnerId = userId,
-                CommentId = CommentId,
-                
-            };
+            unitOfWork.UserCommentRepository.AddCommentRating(commentRating);
         }
 
         public static void UpdateCommentText(Guid CommentId, string newText)
@@ -50,13 +44,6 @@ namespace Business_Logic.Processor
             unitOfWork.UserCommentRepository.Update(CommentId, newText);
         }
 
-        public static void UpdateRating(Guid CommentId)
-        {
-            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
-
-            unitOfWork.UserCommentRepository.UpdateRating(CommentId);
-        }
-
         public static void RemoveComment(Guid CommentId)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
@@ -64,6 +51,7 @@ namespace Business_Logic.Processor
             unitOfWork.UserCommentRepository.Remove(CommentId);
         }
 
+        #region ConvertFunctions
         public static CommentModel ConvertToCommentModel(UserComment userComment)
         {
 
@@ -72,7 +60,6 @@ namespace Business_Logic.Processor
                 Id = userComment.Id,
                 Text = userComment.Text,
                 DataCreated = userComment.DataCreated,
-                TimesVoted = userComment.TimesVoted,
                 OwnerId = userComment.OwnerId,
             };
             return commentModel;
@@ -91,5 +78,46 @@ namespace Business_Logic.Processor
             return model;
         }
 
+        public static CommentRatingModel ConvertToCommentRatingModel(CommentRating commentRating)
+        {
+            if (commentRating == null)
+                return null;
+
+            CommentRatingModel model = new CommentRatingModel()
+            {
+                Id = commentRating.Id,
+                CommentId = commentRating.CommentId,
+                OwnerId = commentRating.OwnerId,
+                DataCreated = commentRating.DataCreated,
+                Rating = commentRating.Rating,
+                DownVote = commentRating.DownVote,
+                UpVote = commentRating.UpVote,
+                Report = commentRating.Reported,
+            };
+
+            return model;
+        }
+
+        public static CommentRating ConvertToCommentRating(CommentRatingModel model)
+        {
+            if (model == null)
+                return null;
+
+            CommentRating commentRating = new CommentRating()
+            {
+                Id = model.Id,
+                CommentId = model.CommentId,
+                OwnerId = model.OwnerId,
+                DataCreated = model.DataCreated,
+                Rating = model.Rating,
+                DownVote = model.DownVote,
+                UpVote = model.UpVote,
+                Reported = model.Report,
+            };
+
+            return commentRating;
+        }
+
+        #endregion
     }
 }

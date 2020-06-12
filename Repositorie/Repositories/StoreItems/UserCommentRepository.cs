@@ -1,4 +1,5 @@
-﻿using Repositorie.DbContexts;
+﻿using Repositorie.Base.Repositories;
+using Repositorie.DbContexts;
 using Repositorie.Entities.Users;
 using Repositorie.Interfaces.Repositories;
 using System;
@@ -54,14 +55,14 @@ namespace Repositorie.Repositories.StoreItems
             comment.Text = newCommentText;
             context.SaveChanges();
         }
-        public void UpdateRating(Guid id)
+
+        public void AddCommentRating(CommentRating commentRating)
         {
-            var comment = context.UserComment.Where(x => x.Id == id).FirstOrDefault();
+            var comment = context.UserComment.Where(x => x.Id == commentRating.CommentId).FirstOrDefault();
 
             if (comment == null)
                 return;
-
-            comment.TimesVoted++;
+            comment.CommentRatings.Add(commentRating);
             context.SaveChanges();
         }
 

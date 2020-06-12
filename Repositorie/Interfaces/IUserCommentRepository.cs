@@ -11,6 +11,7 @@ namespace Repositorie.Interfaces.Repositories
         List<UserComment> GetAllFromUser(Guid Userid);
         void Remove(Guid id);
         void Update(Guid id, string newComment);
-        void UpdateRating(Guid id);
+        void AddCommentRating(CommentRating commentRating);
+
     }
 }

@@ -31,22 +31,6 @@ namespace Mp_WebApp.Controllers
         }
 
         [Authorize(Roles = "Customer")]
-        public ActionResult UpdateCommentRating(Guid storeItemId, Guid commentId)
-        {
-            var model = CommentProcessor.GetUserComment(commentId);
-
-            string identity = User.Identity.Name;
-            Guid userId = Guid.Parse(identity);
-
-            if (model == null || userId != model.OwnerId)
-                return RedirectToAction("Details", "Products", new { id = storeItemId });
-
-            CommentProcessor.UpdateRating(commentId);
-
-            return RedirectToAction("Details", "Products", new { id = storeItemId });
-        }
-
-        [Authorize(Roles = "Customer")]
         public ActionResult RemoveComment(CommentModel model)
         {
             string identity = User.Identity.Name;
@@ -58,6 +42,38 @@ namespace Mp_WebApp.Controllers
             CommentProcessor.RemoveComment(model.Id);
 
             return RedirectToAction("Details", "Products");
+        }
+
+        [Authorize(Roles = "Customer")]
+        public ActionResult CommentRating(Guid commentId,Guid storeItemId)
+        {
+
+            CommentRatingModel model = new CommentRatingModel()
+            {
+                Id = Guid.NewGuid(),
+                CommentId = commentId,     
+                StoreItemId = storeItemId,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Customer")]
+        public ActionResult CommentRating(CommentRatingModel model)
+        {
+            string identity = User.Identity.Name;
+            Guid userId = Guid.Parse(identity);
+
+            if (model == null)
+                return View(model);
+
+            model.OwnerId = userId;
+            model.Id = Guid.NewGuid();
+            model.DataCreated = DateTime.Now;
+
+            CommentProcessor.AddCommentRating(model);
+            return RedirectToAction("Details", "Products", new { id = model.StoreItemId});
         }
     }
 }
