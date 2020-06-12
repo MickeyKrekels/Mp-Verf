@@ -69,11 +69,20 @@
     <Compile Include="Entities\Base\StoreImage.cs" />
     <Compile Include="Entities\Base\StoreItem.cs" />
     <Compile Include="Entities\Users\Admin.cs" />
+    <Compile Include="Entities\Users\CommentRating.cs" />
     <Compile Include="Entities\Users\Customer.cs" />
     <Compile Include="Entities\Users\UserComment.cs" />
     <Compile Include="Migrations\202006102109579_TimesVotedAdded.cs" />
     <Compile Include="Migrations\202006102109579_TimesVotedAdded.designer.cs">
       <DependentUpon>202006102109579_TimesVotedAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006121314077_AddedCommentRatings.cs" />
+    <Compile Include="Migrations\202006121314077_AddedCommentRatings.designer.cs">
+      <DependentUpon>202006121314077_AddedCommentRatings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006121333297_AddedCommentRatingsV2.cs" />
+    <Compile Include="Migrations\202006121333297_AddedCommentRatingsV2.designer.cs">
+      <DependentUpon>202006121333297_AddedCommentRatingsV2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +90,8 @@
     <Compile Include="Interfaces\IStoreItemRepository.cs" />
     <Compile Include="Interfaces\IUserCommentRepository.cs" />
     <Compile Include="Interfaces\IShoppingCartRepository.cs" />
+    <Compile Include="Repositories\StoreItems\CommentRatingRepository.cs" />
+    <Compile Include="Interfaces\ICommentRatingRepository.cs" />
     <Compile Include="Repositories\StoreItems\ShoppingCartRepository.cs" />
     <Compile Include="Repositories\StoreItems\StoreItemRepository.cs" />
     <Compile Include="Repositories\StoreItems\UserCommentRepository.cs" />
@@ -114,6 +125,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006102109579_TimesVotedAdded.resx">
       <DependentUpon>202006102109579_TimesVotedAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006121314077_AddedCommentRatings.resx">
+      <DependentUpon>202006121314077_AddedCommentRatings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006121333297_AddedCommentRatingsV2.resx">
+      <DependentUpon>202006121333297_AddedCommentRatingsV2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

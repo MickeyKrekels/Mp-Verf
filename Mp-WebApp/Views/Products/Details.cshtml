@@ -60,7 +60,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            € @Html.DisplayFor(model => model.Price)
 
         </dd>
 
@@ -125,8 +125,13 @@
 
     </style>
     @{
-        string identity = User.Identity.Name;
-        Guid userId = Guid.Parse(identity);
+
+        Guid userId = new Guid();
+        if (User.Identity.IsAuthenticated)
+        {
+            string identity = User.Identity.Name;
+            userId = Guid.Parse(identity);
+        }
     }
     @foreach (var comment in Model.Comments.OrderByDescending(x => x.DataCreated))
     {

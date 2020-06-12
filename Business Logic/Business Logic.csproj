@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\CommentRatingModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\ShoppingCartModel.cs" />
     <Compile Include="Models\SpecificationModel.cs" />

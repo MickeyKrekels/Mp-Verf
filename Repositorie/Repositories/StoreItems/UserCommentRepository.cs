@@ -54,16 +54,14 @@ namespace Repositorie.Repositories.StoreItems
             comment.Text = newCommentText;
             context.SaveChanges();
         }
-        public void UpdateRating(Guid id, int rating)
+        public void UpdateRating(Guid id)
         {
             var comment = context.UserComment.Where(x => x.Id == id).FirstOrDefault();
 
             if (comment == null)
                 return;
 
-            comment.ProductRating += rating;
             comment.TimesVoted++;
-
             context.SaveChanges();
         }
 

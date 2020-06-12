@@ -25,12 +25,15 @@ namespace Repositorie.DbContexts
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Admin> Admin { get; set; }
 
-        //items
+        //Products
         public DbSet<StoreItem> StoreItem { get; set; }
         public DbSet<StoreImage> StoreImage { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
 
+        //comments
         public DbSet<UserComment> UserComment { get; set; }
+        public DbSet<CommentRating> CommentRating { get; set; }
 
     }
 }
+

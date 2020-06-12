@@ -11,20 +11,36 @@ namespace Business_Logic.Processor
 {
     public static class CommentProcessor
     {
-        public static void AddComment(Guid userId, Guid StoreItemId, string text , int productRating)
+        public static void AddComment(Guid userId, Guid StoreItemId, string text)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
-
 
             UserComment comment = new UserComment
             {
                 Id = Guid.NewGuid(),
                 OwnerId = userId,
                 Text = text,
-                ProductRating = productRating,
             };
 
             unitOfWork.StoreItemRepository.AddComments(StoreItemId, comment);
+        }
+
+        public static void AddCommentRating(Guid userId, Guid CommentId, int productRating)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            var comment = unitOfWork.CommentRatingRepository.Get(CommentId);
+
+            if (comment == null)
+                return;
+
+            CommentRating commentRating = new CommentRating
+            {
+                Id = Guid.NewGuid(),
+                OwnerId = userId,
+                CommentId = CommentId,
+                
+            };
         }
 
         public static void UpdateCommentText(Guid CommentId, string newText)
@@ -34,11 +50,11 @@ namespace Business_Logic.Processor
             unitOfWork.UserCommentRepository.Update(CommentId, newText);
         }
 
-        public static void UpdateRating(Guid CommentId, int rating)
+        public static void UpdateRating(Guid CommentId)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            unitOfWork.UserCommentRepository.UpdateRating(CommentId, rating);
+            unitOfWork.UserCommentRepository.UpdateRating(CommentId);
         }
 
         public static void RemoveComment(Guid CommentId)

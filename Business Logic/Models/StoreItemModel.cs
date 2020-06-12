@@ -22,7 +22,6 @@ namespace Business_Logic.Models
         public string Brand { get; set; }
 
         [Display(Name = "Product Price")]
-        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [Display(Name = "Product Discount")]

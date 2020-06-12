@@ -14,9 +14,6 @@ namespace Business_Logic.Models
         public DateTime DataCreated { get; set; }
         public int TimesVoted { get; set; }
         public int TotalRating { get; set; }
-
-        [Range(1, 10, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-        public int ProductRating { get; set; } //input player // 1 = 0.5 star - 2 = 1 star
         public decimal RatingAverage
         {
             get

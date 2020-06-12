@@ -21,13 +21,14 @@ namespace Repositorie.UnitOfWorks
         private IStoreItemRepository storeItemRepository;
         private IUserCommentRepository userCommentRepository;
         private IShoppingCartRepository shoppingCartRepository;
+        private ICommentRatingRepository commentRatingRepository;
 
         public UnitOfWorkRepository() : base(new MPVerfDB())
         {
 
         }
 
-        //customer
+        //users
         public ICustomerRepository CustomerRepository
         {
             get
@@ -50,7 +51,7 @@ namespace Repositorie.UnitOfWorks
                 return adminRepository;
             }
         }
-        //storeitems
+        //products
         public IStoreItemRepository StoreItemRepository
         {
             get
@@ -62,6 +63,18 @@ namespace Repositorie.UnitOfWorks
                 return storeItemRepository;
             }
         }
+        public IShoppingCartRepository ShoppingCartRepository
+        {
+            get
+            {
+                if (shoppingCartRepository == null)
+                {
+                    shoppingCartRepository = new ShoppingCartRepository(DbContext);
+                }
+                return shoppingCartRepository;
+            }
+        }
+        //comments
         public IUserCommentRepository UserCommentRepository
         {
             get
@@ -73,15 +86,15 @@ namespace Repositorie.UnitOfWorks
                 return userCommentRepository;
             }
         }
-        public IShoppingCartRepository ShoppingCartRepository
+        public ICommentRatingRepository CommentRatingRepository
         {
             get
             {
-                if (shoppingCartRepository == null)
+                if (commentRatingRepository == null)
                 {
-                    shoppingCartRepository = new ShoppingCartRepository(DbContext);
+                    commentRatingRepository = new CommentRatingRepository(DbContext);
                 }
-                return shoppingCartRepository;
+                return commentRatingRepository;
             }
         }
 
