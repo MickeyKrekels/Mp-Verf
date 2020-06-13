@@ -11,10 +11,13 @@ namespace Repositorie.Entities.Users
     {
         public Guid OwnerId { get; set; }
         public Guid CommentId { get; set; }
+        public Guid storeItemId { get; set; }
+
         public int Rating { get; set; }
         public bool UpVote { get; set; }
         public bool DownVote { get; set; }
         public bool Reported { get; set; }
+        public string ReportText { get; set; }
         public DateTime DataCreated { get; set; }
         public CommentRating()
         {

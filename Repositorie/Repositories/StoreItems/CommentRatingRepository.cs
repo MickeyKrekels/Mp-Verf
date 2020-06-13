@@ -59,8 +59,13 @@ namespace Repositorie.Repositories.StoreItems
 
             if (result == null)
                 return;
+            result.Rating = commentRating.Rating;
+            result.DownVote = commentRating.DownVote;
+            result.UpVote = commentRating.UpVote;
 
-            context.Entry(result).CurrentValues.SetValues(commentRating);
+            result.Reported = commentRating.Reported;
+            result.ReportText = commentRating.ReportText;
+
             context.SaveChanges();
         }
     }

@@ -88,6 +88,22 @@
     <Compile Include="Migrations\202006122034253_AddedReported.designer.cs">
       <DependentUpon>202006122034253_AddedReported.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006131433160_AddedReportText.cs" />
+    <Compile Include="Migrations\202006131433160_AddedReportText.designer.cs">
+      <DependentUpon>202006131433160_AddedReportText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006131442478_AddedReportTextv2.cs" />
+    <Compile Include="Migrations\202006131442478_AddedReportTextv2.designer.cs">
+      <DependentUpon>202006131442478_AddedReportTextv2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006131511104_AddedReportTextv3.cs" />
+    <Compile Include="Migrations\202006131511104_AddedReportTextv3.designer.cs">
+      <DependentUpon>202006131511104_AddedReportTextv3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006132221323_AddedReportTextv4.cs" />
+    <Compile Include="Migrations\202006132221323_AddedReportTextv4.designer.cs">
+      <DependentUpon>202006132221323_AddedReportTextv4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Users\User.cs" />
@@ -138,6 +154,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006122034253_AddedReported.resx">
       <DependentUpon>202006122034253_AddedReported.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006131433160_AddedReportText.resx">
+      <DependentUpon>202006131433160_AddedReportText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006131442478_AddedReportTextv2.resx">
+      <DependentUpon>202006131442478_AddedReportTextv2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006131511104_AddedReportTextv3.resx">
+      <DependentUpon>202006131511104_AddedReportTextv3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006132221323_AddedReportTextv4.resx">
+      <DependentUpon>202006132221323_AddedReportTextv4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

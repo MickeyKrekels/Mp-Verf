@@ -73,6 +73,17 @@ namespace Mp_WebApp.Controllers
                 .ToPagedList(i ?? 1, 10));
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult ComplaintsList(string search, int? i)
+        {
+            ViewBag.Message = "All users";
+            var models = UserProcessor.ConvertAllUsersToModel();
+            return View(models
+                .Where(x => search == null || x.Name.ToLower().StartsWith(search.ToLower()))
+                .ToList()
+                .ToPagedList(i ?? 1, 10));
+        }
+
         [Authorize(Roles = "Customer")]
         public ActionResult ShoppingCart()
         {

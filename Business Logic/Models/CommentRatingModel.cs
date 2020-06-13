@@ -20,6 +20,9 @@ namespace Business_Logic.Models
         public bool DownVote { get; set; }
         public bool UpVote { get; set; }
         public bool Report { get; set; }
+
+        [Display(Name = "Please share your Opinion with us!")]
+        public string OpinionText { get; set; }
         public DateTime DataCreated { get; set; }
     }
 }

@@ -136,15 +136,31 @@
     {
         <div class="chatbox">
             <div style="float: right;">
+                @{
+                    var commentRating = comment.commentRatings.Where(x => x.OwnerId == userId).FirstOrDefault();
+                }
 
-                @if (userId != comment.OwnerId && comment.commentRatings.Where(x=>x.OwnerId == userId).FirstOrDefault() == null)
+
+                @if (userId == comment.OwnerId)
                 {
-                    @Html.ActionLink("Post Rating", "CommentRating", "Comment", new { storeItemId = Model.Id, commentId = comment.Id }, new { @class = "btn btn-info" })
+                    <div>
+                        @Html.ActionLink("Remove Comment", "RemoveComment", "Comment", new { Id = comment.Id}, new { @class = "btn btn-danger" })
+                    </div>
                 }
-                else
+                else if (commentRating == null)
                 {
-                    @Html.ActionLink("Change your comment", "Edit Comment", "Comment", new { storeItemId = Model.Id, commentId = comment.Id }, new { @class = "btn btn-success" })
+                    <div>
+                        @Html.ActionLink("Post Rating", "CommentRating", "Comment", new { commentId = comment.Id, storeItemId = Model.Id }, new { @class = "btn btn-info" })
+                    </div>
                 }
+                else if (commentRating != null)
+                {
+                    <div>
+                        @Html.ActionLink("Change your Rating", "EditCommentRating", "Comment", new { commentRatingId = commentRating.Id }, new { @class = "btn btn-success" })
+                    </div>
+                }
+
+
             </div>
             <div style="float: right;">
                 <p style="border:3px; border-style:solid; border-color:goldenrod; padding: 6px;background-color:darkgray">

@@ -26,6 +26,7 @@ namespace Business_Logic.Models
             }
         }
         public Guid OwnerId { get; set; }
+        public Guid StoreItemId { get; set; }
         public List<CommentRatingModel> commentRatings { get; set; }
     }
 }

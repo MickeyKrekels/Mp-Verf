@@ -11,7 +11,7 @@ namespace Business_Logic.Processor
 {
     public static class CommentProcessor
     {
-        public static void AddComment(Guid userId, Guid StoreItemId, string text)
+        public static void AddComment(Guid userId, Guid storeItemId, string text)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
@@ -22,7 +22,7 @@ namespace Business_Logic.Processor
                 Text = text,
             };
 
-            unitOfWork.StoreItemRepository.AddComments(StoreItemId, comment);
+            unitOfWork.StoreItemRepository.AddComments(storeItemId, comment);
         }
 
         public static void AddCommentRating(CommentRatingModel model)
@@ -37,21 +37,52 @@ namespace Business_Logic.Processor
             unitOfWork.UserCommentRepository.AddCommentRating(commentRating);
         }
 
-        public static void UpdateCommentText(Guid CommentId, string newText)
+        public static void UpdateCommentText(Guid commentId, string newText)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            unitOfWork.UserCommentRepository.Update(CommentId, newText);
+            unitOfWork.UserCommentRepository.Update(commentId, newText);
         }
 
-        public static void RemoveComment(Guid CommentId)
+        public static void RemoveComment(Guid commentId)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
-            unitOfWork.UserCommentRepository.Remove(CommentId);
+            unitOfWork.UserCommentRepository.Remove(commentId);
         }
+        public static void UpdateCommentRating(CommentRatingModel model)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            if (model == null)
+                return;
+
+            var commentRating = ConvertToCommentRating(model);
+            unitOfWork.CommentRatingRepository.Update(commentRating);
+        }
+
+        public static void RemoveCommentRating(Guid commentRatingId)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+            unitOfWork.CommentRatingRepository.Remove(commentRatingId);
+        }
+
 
         #region ConvertFunctions
+        public static CommentRatingModel GetCommentRating(Guid commentRatingId)
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+
+            var commentRating = unitOfWork.CommentRatingRepository.Get(commentRatingId);
+
+            if (commentRating == null)
+                return null;
+
+            var model = ConvertToCommentRatingModel(commentRating);
+
+            return model;
+
+        }
         public static CommentModel ConvertToCommentModel(UserComment userComment)
         {
             List<CommentRatingModel> commentRatings = new List<CommentRatingModel>();
@@ -73,6 +104,7 @@ namespace Business_Logic.Processor
                 DataCreated = userComment.DataCreated,
                 OwnerId = userComment.OwnerId,
                 commentRatings = commentRatings,
+                StoreItemId = userComment.StoreItem_Id,
             };
             return commentModel;
         }
@@ -100,11 +132,13 @@ namespace Business_Logic.Processor
                 Id = commentRating.Id,
                 CommentId = commentRating.CommentId,
                 OwnerId = commentRating.OwnerId,
+                StoreItemId = commentRating.storeItemId,
                 DataCreated = commentRating.DataCreated,
                 Rating = commentRating.Rating,
                 DownVote = commentRating.DownVote,
                 UpVote = commentRating.UpVote,
                 Report = commentRating.Reported,
+                OpinionText = commentRating.ReportText,
             };
 
             return model;
@@ -120,11 +154,13 @@ namespace Business_Logic.Processor
                 Id = model.Id,
                 CommentId = model.CommentId,
                 OwnerId = model.OwnerId,
+                storeItemId = model.StoreItemId,
                 DataCreated = model.DataCreated,
                 Rating = model.Rating,
                 DownVote = model.DownVote,
                 UpVote = model.UpVote,
                 Reported = model.Report,
+                ReportText = model.OpinionText,
             };
 
             return commentRating;

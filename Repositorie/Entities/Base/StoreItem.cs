@@ -2,6 +2,7 @@
 using Repositorie.Entities.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace Repositorie.Entities.Base
         public int InStock { get; set; }
         public virtual List<Specification> Specification { get; set; }
         public virtual List<StoreImage> Images { get; set; }
+
+        [ForeignKey("StoreItem_Id")]
         public virtual List<UserComment> UserComments { get; set; }
     }
 }
