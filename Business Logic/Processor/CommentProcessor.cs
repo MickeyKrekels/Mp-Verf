@@ -31,7 +31,7 @@ namespace Business_Logic.Processor
 
             if (commentRating == null)
                 return;
-            
+
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
 
             unitOfWork.UserCommentRepository.AddCommentRating(commentRating);
@@ -54,6 +54,17 @@ namespace Business_Logic.Processor
         #region ConvertFunctions
         public static CommentModel ConvertToCommentModel(UserComment userComment)
         {
+            List<CommentRatingModel> commentRatings = new List<CommentRatingModel>();
+
+            if (userComment.CommentRatings != null)
+            {
+                foreach (var rating in userComment.CommentRatings)
+                {
+                    var model = ConvertToCommentRatingModel(rating);
+                    commentRatings.Add(model);
+
+                }
+            }
 
             CommentModel commentModel = new CommentModel
             {
@@ -61,6 +72,7 @@ namespace Business_Logic.Processor
                 Text = userComment.Text,
                 DataCreated = userComment.DataCreated,
                 OwnerId = userComment.OwnerId,
+                commentRatings = commentRatings,
             };
             return commentModel;
         }

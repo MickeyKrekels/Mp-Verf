@@ -122,7 +122,6 @@
             padding: 20px;
             margin: 10px;
         }
-
     </style>
     @{
 
@@ -137,7 +136,8 @@
     {
         <div class="chatbox">
             <div style="float: right;">
-                @if (userId != comment.OwnerId)
+
+                @if (userId != comment.OwnerId && comment.commentRatings.Where(x=>x.OwnerId == userId).FirstOrDefault() == null)
                 {
                     @Html.ActionLink("Post Rating", "CommentRating", "Comment", new { storeItemId = Model.Id, commentId = comment.Id }, new { @class = "btn btn-info" })
                 }
@@ -145,9 +145,13 @@
                 {
                     @Html.ActionLink("Change your comment", "Edit Comment", "Comment", new { storeItemId = Model.Id, commentId = comment.Id }, new { @class = "btn btn-success" })
                 }
-                <br>
             </div>
-            
+            <div style="float: right;">
+                <p style="border:3px; border-style:solid; border-color:goldenrod; padding: 6px;background-color:darkgray">
+                    <text style="color:black; font-display:block;" ;>Average Rating: @comment.RatingAverage Stars</text>
+                </p>
+            </div>
+
             <div>
                 <p>@comment.Text</p>
                 <span style="color: #999;">@comment.DataCreated</span>

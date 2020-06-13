@@ -12,19 +12,20 @@ namespace Business_Logic.Models
     {
         public string Text { get; set; }
         public DateTime DataCreated { get; set; }
-        public int TimesVoted { get; set; }
-        public int TotalRating { get; set; }
         public decimal RatingAverage
         {
             get
             {
-                if (TimesVoted == 0)
+                if (commentRatings == null || commentRatings.Count() == 0)
                 {
-                    return (decimal)TimesVoted;
+                    return 0;
                 }
-                return TotalRating / TimesVoted;
+                var average = (decimal)commentRatings.Sum(x => x.Rating) / (decimal)commentRatings.Count();
+                var starRating = average / 2;
+                return Decimal.Round(starRating, 2);
             }
         }
         public Guid OwnerId { get; set; }
+        public List<CommentRatingModel> commentRatings { get; set; }
     }
 }
