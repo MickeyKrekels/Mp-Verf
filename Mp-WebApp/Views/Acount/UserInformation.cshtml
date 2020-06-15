@@ -1,0 +1,40 @@
+﻿@model Business_Logic.Models.UserModel
+
+@{
+    ViewBag.Title = "UserInformation";
+}
+
+<h2>UserInformation</h2>
+
+<div>
+    <h4>UserModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.Raw("\u2022\u2022\u2022\u2022\u2022")
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to User List", "UserList", "Acount")
+</p>

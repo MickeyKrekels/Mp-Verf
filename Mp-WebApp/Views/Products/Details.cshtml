@@ -132,7 +132,7 @@
             userId = Guid.Parse(identity);
         }
     }
-    @foreach (var comment in Model.Comments.OrderByDescending(x => x.DataCreated))
+    @foreach (var comment in Model.Comments.OrderByDescending(x => x.RatingAverage))
     {
         <div class="chatbox">
             <div style="float: right;">

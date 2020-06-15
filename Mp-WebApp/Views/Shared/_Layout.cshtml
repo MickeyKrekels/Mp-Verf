@@ -27,6 +27,7 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("User List", "UserList", "Acount")</li>
+                        <li>@Html.ActionLink("Complaints", "ComplaintsList", "Comment")</li>
                     }
                     else
                     {

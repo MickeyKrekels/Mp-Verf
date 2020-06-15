@@ -119,7 +119,6 @@ namespace Mp_WebApp.Controllers
         public ActionResult Details(Guid id)
         {
             var model = StoreItemProcessor.GetStoreItemModelbyId(id);
-
             if (model == null)
                 return View();
 

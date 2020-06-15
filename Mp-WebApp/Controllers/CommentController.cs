@@ -1,5 +1,6 @@
 ﻿using Business_Logic.Models;
 using Business_Logic.Processor;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Mp_WebApp.Controllers
             return RedirectToAction("Details", "Products", new { id = storeItemId });
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Admin,Customer")]
         public ActionResult RemoveComment(Guid Id)
         {
             string identity = User.Identity.Name;
@@ -89,7 +90,30 @@ namespace Mp_WebApp.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ComplaintsList(string search, int? i)
+        {
+            ViewBag.Message = "All Complaints";
+            var models = CommentProcessor.GetCommentRating();
+
+            return View(models
+                .Where(x => search == null || x.OpinionText.ToLower().StartsWith(search.ToLower()))
+                .Where(x => x.Report)
+                .ToList()
+                .ToPagedList(i ?? 1, 10));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult CommentRatingDetails(Guid id)
+        {
+            var model = CommentProcessor.GetCommentRating(id);
+            var reportedComment = CommentProcessor.GetUserComment(model.CommentId);
+            ViewData["ReportedComment"] = reportedComment;
+
+            return View(model);
+        }
+
+       [HttpPost]
         [Authorize(Roles = "Customer")]
         public ActionResult EditCommentRating(CommentRatingModel model)
         {
@@ -97,7 +121,7 @@ namespace Mp_WebApp.Controllers
             return RedirectToAction("Details", "Products", new { id = model.StoreItemId });
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Admin,Customer")]
         public ActionResult RemoveCommentRating(Guid commentRatingId)
         {
             var model = CommentProcessor.GetCommentRating(commentRatingId);

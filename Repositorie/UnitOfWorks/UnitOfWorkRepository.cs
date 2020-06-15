@@ -63,6 +63,7 @@ namespace Repositorie.UnitOfWorks
                 return storeItemRepository;
             }
         }
+
         public IShoppingCartRepository ShoppingCartRepository
         {
             get

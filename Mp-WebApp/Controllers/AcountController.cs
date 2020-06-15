@@ -62,19 +62,17 @@ namespace Mp_WebApp.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult UserList(string search, int? i)
+        [Authorize(Roles = "Admin,Customer")]
+        public ActionResult UserInformation(Guid UserId)
         {
-            ViewBag.Message = "All users";
-            var models = UserProcessor.ConvertAllUsersToModel();
-            return View(models
-                .Where(x => search == null || x.Name.ToLower().StartsWith(search.ToLower()))
-                .ToList()
-                .ToPagedList(i ?? 1, 10));
+            var model = UserProcessor.GetUserToModel(UserId);
+
+            ViewBag.Message = $"User: {model.Name}";
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult ComplaintsList(string search, int? i)
+        public ActionResult UserList(string search, int? i)
         {
             ViewBag.Message = "All users";
             var models = UserProcessor.ConvertAllUsersToModel();
@@ -159,12 +157,13 @@ namespace Mp_WebApp.Controllers
             var userId = GetUserId();
 
             var userModel = UserProcessor.GetUserToModel(userId);
+            var mailBody = ShoppingCartToString(userModel);
 
-            if (!SendEmail(userId, "MP-Verf Order confirmation email", "test"))
+            if (!SendEmail(userId, "MP-Verf Order confirmation email", mailBody))
             {
                 //email did not send do stuff
-                
-                //return
+
+                return RedirectToAction("ShoppingCart", "Acount");
             }
             //clear item list 
             foreach (var storeItem in userModel.ShoppingCart)
@@ -212,6 +211,16 @@ namespace Mp_WebApp.Controllers
             }
 
         }
+        public string ShoppingCartToString(UserModel userModel)
+        {
+            string result = "";
+            foreach (var storeItem in userModel.ShoppingCart)
+            {
+                result += $"Name: {storeItem.Name} Amount: {storeItem.Amount} Price: € {storeItem.PriceTimesAmount}. ";
+            }
+            result += $"Total price: € {userModel.ShoppingCart.Sum(x => x.PriceTimesAmount)}.";
 
+            return result;
+        }
     }
 }

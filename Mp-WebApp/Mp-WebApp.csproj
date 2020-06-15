@@ -298,6 +298,9 @@
     <Content Include="Views\Acount\EditShoppingCart.cshtml" />
     <Content Include="Views\Comment\CommentRating.cshtml" />
     <Content Include="Views\Comment\EditCommentRating.cshtml" />
+    <Content Include="Views\Comment\ComplaintsList.cshtml" />
+    <Content Include="Views\Acount\UserInformation.cshtml" />
+    <Content Include="Views\Comment\CommentRatingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

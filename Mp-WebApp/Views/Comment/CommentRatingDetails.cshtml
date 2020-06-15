@@ -1,0 +1,102 @@
+﻿@model Business_Logic.Models.CommentRatingModel
+
+@{
+    ViewBag.Title = "CommentRatingDetails";
+}
+
+@using Business_Logic.Models;
+
+<h2>Comment Rating Details</h2>
+
+<div>
+    <h4>Comment Rating Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Comment Rating
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DownVote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DownVote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpVote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpVote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Report)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Report)
+        </dd>
+
+        <dt>
+            Opinion Text
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpinionText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataCreated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("See Rating user", "UserInformation", "Acount", new { UserId = Model.OwnerId }, new { @class = "btn btn-success" })
+    @Html.ActionLink("See Comment section", "Details", "Products", new { id = Model.StoreItemId }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete Comment Rating", "RemoveCommentRating", "Comment", new { commentRatingId = Model.Id }, new { @class = "btn btn-danger" })
+    <br />
+    <hr />
+    <h4>Reported Comment Details</h4>
+    <hr />
+    @{
+        var Comment = ViewData["ReportedComment"] as CommentModel;
+    }
+
+    <dl class="dl-horizontal">
+        <dt>
+            Comment Text
+        </dt>
+        <dd>
+            @Comment.Text
+        </dd>
+        <dt>
+            Rating Average
+        </dt>
+        <dd>
+            @Comment.RatingAverage
+        </dd>
+        <dt>
+            Date Created
+        </dt>
+        <dd>
+            @Comment.DataCreated
+        </dd>
+
+    </dl>
+    <br />
+    @Html.ActionLink("See Reported user", "UserInformation", "Acount", new { UserId = Comment.OwnerId }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Delete Comment", "RemoveComment", "Comment", new { id = Model.CommentId }, new { @class = "btn btn-danger" })
+</p>

@@ -11,8 +11,6 @@
 <h2>UserList</h2>
 
 <p>
-    @Html.ActionLink("Create New","SignUp", "Acount", new { @class = "btn btn-info" })
-
     @using (Html.BeginForm("UserList", "Acount", FormMethod.Get))
     {
         <input type="text" name="search" placeholder="Enter Username" />
@@ -52,11 +50,10 @@
                     @Html.Raw("\u2022\u2022\u2022\u2022\u2022")
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+                    @Html.ActionLink("User Information", "UserInformation", "Acount", new { UserId = item.Id },null) 
                 </td>
             </tr>
         }
     }
-
     </table>
 @Html.PagedListPager(Model, i => Url.Action("UserList", "Acount", new { i, search = Request.QueryString["Search"] } ))

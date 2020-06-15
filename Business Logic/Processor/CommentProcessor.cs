@@ -4,6 +4,7 @@ using Repositorie.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,6 +51,7 @@ namespace Business_Logic.Processor
 
             unitOfWork.UserCommentRepository.Remove(commentId);
         }
+
         public static void UpdateCommentRating(CommentRatingModel model)
         {
             UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
@@ -67,6 +69,18 @@ namespace Business_Logic.Processor
             unitOfWork.CommentRatingRepository.Remove(commentRatingId);
         }
 
+        public static List<CommentRatingModel> GetCommentRating()
+        {
+            UnitOfWorkRepository unitOfWork = new UnitOfWorkRepository();
+            var commentRatings = unitOfWork.CommentRatingRepository.Get();
+
+            if (commentRatings == null)
+                return null;
+
+            var models = ConvertToCommentRatingModel(commentRatings);
+
+            return models;
+        }
 
         #region ConvertFunctions
         public static CommentRatingModel GetCommentRating(Guid commentRatingId)
@@ -142,6 +156,22 @@ namespace Business_Logic.Processor
             };
 
             return model;
+        }
+
+        public static List<CommentRatingModel> ConvertToCommentRatingModel(List<CommentRating> commentRatings)
+        {
+            if (commentRatings == null)
+                return null;
+
+            List<CommentRatingModel> models = new List<CommentRatingModel>();
+
+            foreach (var commentRating in commentRatings)
+            {
+                var model = ConvertToCommentRatingModel(commentRating);
+                models.Add(model);
+            }
+
+            return models;
         }
 
         public static CommentRating ConvertToCommentRating(CommentRatingModel model)

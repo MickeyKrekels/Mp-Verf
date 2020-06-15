@@ -1,0 +1,62 @@
+﻿@model IPagedList<Business_Logic.Models.CommentRatingModel>
+
+@{
+    ViewBag.Title = "ComplaintsList";
+}
+
+@using PagedList.Mvc;
+@using PagedList;
+
+<h2>ComplaintsList</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().DownVote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().UpVote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Report)
+        </th>
+        <th>
+            User Opinion 
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().DataCreated)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DownVote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpVote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Report)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpinionText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCreated)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "CommentRatingDetails","Comment", new { id = item.Id }, new { @class = "btn btn-success" }) 
+            </td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager(Model, i => Url.Action("ComplaintsList", "Comment", new { i, search = Request.QueryString["Search"]}))
