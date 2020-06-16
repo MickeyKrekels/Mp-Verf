@@ -195,7 +195,7 @@ namespace Mp_WebApp.Controllers
                 client.Timeout = 100000;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                client.Credentials = new NetworkCredential(senderEmail,senderPassword);
                 // Whrite email
                 MailMessage mailMessage = new MailMessage(senderEmail, userModel.Email, subject, emailBody);
                 mailMessage.IsBodyHtml = true;

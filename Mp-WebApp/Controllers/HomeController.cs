@@ -1,5 +1,6 @@
 ﻿using Business_Logic.Models;
 using Business_Logic.Processor;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -11,7 +12,7 @@ namespace Mp_WebApp.Controllers
         {
 
             var models = StoreItemProcessor.ConvertAllStoreItemToModels();
-
+            models = models.Where(x => x.Discount != 0).ToList();
             return View(models);
         }
 

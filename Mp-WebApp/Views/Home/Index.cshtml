@@ -79,7 +79,7 @@
                 <img src="data:image;base64,@System.Convert.ToBase64String(item.Images[0].Image)" alt="" />
 
                 @{ 
-                 string text = $"{item.Name} Now {item.PriceWithDiscount}!";
+                 string text = $"{item.Name} With {item.Discount}% Discount Now {item.PriceWithDiscount}!";
                 }
                 @Html.ActionLink(text, "Details", "Products", new { id = item.Id }, null)
             </div>
