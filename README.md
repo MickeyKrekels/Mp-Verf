@@ -1,2 +1,2 @@
 # Mp-Verf
-Paint Webshop
+Paint Webshop project build using the MVC, Entity framework and SQL-database.  
